@@ -59,12 +59,12 @@ export default function LandingPage()  {
               Assign daily chores, let kids check off jobs on their phone, and pay them weekly — without the nagging, the arguments, or the sticky notes on the fridge.
             </p>
             <div className="hero-ctas" style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <a href="/app" className="btn-green">Get started free →</a>
+              <a href="/app" className="btn-green">Start free trial →</a>
               <a href="#how-it-works" className="btn-outline">See how it works</a>
             </div>
             <p style={{fontSize:13,color:'#AAA',marginTop:16}}>No account needed · Works on any phone · Free to try</p>
             <div style={{display:'flex',gap:32,marginTop:40,paddingTop:32,borderTop:'1px solid #EBEBEB',flexWrap:'wrap'}}>
-              {[{num:'3 min',label:'to set up your family'},{num:'$0',label:'to get started'},{num:'100%',label:'works on any phone'}].map(s=>(
+              {[{num:'3 min',label:'to set up your family'},{num:'$1.99',label:'to get started'},{num:'100%',label:'works on any phone'}].map(s=>(
                 <div key={s.label}>
                   <div style={{fontSize:28,fontWeight:800,color:'#1D9E75'}}>{s.num}</div>
                   <div style={{fontSize:13,color:'#888',marginTop:2}}>{s.label}</div>
@@ -208,7 +208,7 @@ export default function LandingPage()  {
           </div>
           <div className="pricing-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}}>
             {[
-              {name:'Free',price:'$0',period:'forever',desc:'Perfect for one family.',features:['1 family','Up to 4 kids','Unlimited chores','Weekly pay tracking','Works on any phone'],cta:'Get started free',href:'/app',popular:false},
+              {name:'Free',price:'$1.99',period:'forever',desc:'Start free trial.',features:['1 family','Up to 4 kids','Unlimited chores','Weekly pay tracking','Works on any phone'],cta:'Start free trial',href:'/app',popular:false},
               {name:'Family Pro',price:'$4',period:'per month',desc:'Extra features for power families.',features:['Everything in Free','Photo proof of chores','Parent approval required','Savings goals for kids','Streak & badge rewards'],cta:'Coming soon',href:'#',popular:true},
               {name:'Business',price:'Custom',period:'',desc:'For running multiple client families.',features:['Multiple families','Custom branding','Admin panel','White-label option','Priority support'],cta:'Contact us',href:'mailto:hello@homechores.app',popular:false},
             ].map(p=>(
@@ -262,7 +262,7 @@ export default function LandingPage()  {
           </h2>
           <p style={{fontSize:17,color:'#8B949E',marginBottom:36,lineHeight:1.7}}>Set up your family in 3 minutes. No credit card. No app to download.</p>
           <a href="/app" className="btn-green" style={{fontSize:18,padding:'16px 36px'}}>Start for free →</a>
-          <p style={{color:'#444',fontSize:13,marginTop:16}}>Free forever for one family · Upgrade anytime</p>
+          <p style={{color:'#444',fontSize:13,marginTop:16}}>2 weeks free · then $1.99/month · cancel anytime</p>
         </div>
       </section>
 
