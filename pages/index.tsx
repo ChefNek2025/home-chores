@@ -36,7 +36,7 @@ export default function LandingPage()  {
         <div style={{maxWidth:1100,margin:'0 auto',padding:'0 24px',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
           <div style={{display:'flex',alignItems:'center',gap:10}}>
             <span style={{fontSize:24}}>🏠</span>
-            <span style={{fontWeight:800,fontSize:18}}>Home Chores</span>
+            <span style={{fontWeight:800,fontSize:18}}>Seru Chores</span>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:24}}>
             <a href="#how-it-works" className="nav-link">How it works</a>
@@ -50,10 +50,10 @@ export default function LandingPage()  {
         <div className="hero-inner" style={{display:'flex',alignItems:'center',gap:64}}>
           <div style={{flex:1}}>
             <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'#E1F5EE',color:'#0F6E56',fontWeight:700,fontSize:13,padding:'6px 14px',borderRadius:99,marginBottom:24}}>
-              ✨ Built for real families, this summer
+              ✨ Seru means "Make it" in Amharic 🇪🇹
             </div>
             <h1 style={{fontSize:'clamp(36px,5vw,60px)',fontWeight:800,lineHeight:1.1,letterSpacing:'-1.5px',color:'#0D1117',marginBottom:20}}>
-              Your kids do the work.<br/><span style={{color:'#1D9E75'}}>You track it all.</span>
+             Seru — Make it happen.<br/><span style={{color:'#1D9E75'}}>Your kids earn it.</span>
             </h1>
             <p style={{fontSize:18,color:'#555',lineHeight:1.7,marginBottom:32,maxWidth:460}}>
               Assign daily chores, let kids check off jobs on their phone, and pay them weekly — without the nagging, the arguments, or the sticky notes on the fridge.
@@ -123,7 +123,7 @@ export default function LandingPage()  {
               </div>
             ))}
           </div>
-          <p style={{fontSize:18,color:'#C9D1D9',marginTop:32,fontWeight:500}}>Home Chores fixes all of this — in one app, on every phone.</p>
+          <p style={{fontSize:18,color:'#C9D1D9',marginTop:32,fontWeight:500}}>Seru Chores fixes all of this — in one app, on every phone.</p>
         </div>
       </section>
 
@@ -241,7 +241,7 @@ export default function LandingPage()  {
           <h2 style={{fontSize:'clamp(28px,4vw,38px)',fontWeight:800,letterSpacing:'-1px',color:'#0D1117'}}>Questions parents ask</h2>
         </div>
         {[
-          {q:'Do my kids need to download an app?',a:'Nope. Home Chores is a regular website. Kids open their link in Safari or Chrome, tap "Add to Home Screen," and it looks just like a real app — no App Store needed.'},
+          {q:'Do my kids need to download an app?',a:'Nope. Seru Chores is a regular website. Kids open their link in Safari or Chrome, tap "Add to Home Screen," and it looks just like a real app — no App Store needed.'},
           {q:"Is my family's data private?",a:'All data is stored directly on your device — nothing is sent to a server. Your family\'s chore history stays on your phone, not ours.'},
           {q:'Can I change the chores or pay rates?',a:'Any time. Head to the Admin dashboard → Manage tab. Add, remove, or update chores whenever you want.'},
           {q:'What age is this good for?',a:'Best for kids ages 8–17 who are old enough to use a phone.'},
@@ -269,7 +269,7 @@ export default function LandingPage()  {
       <footer style={{background:'#0A0A0A',padding:'32px 24px',textAlign:'center'}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginBottom:12}}>
           <span style={{fontSize:18}}>🏠</span>
-          <span style={{fontWeight:800,fontSize:15,color:'#fff'}}>Home Chores</span>
+          <span style={{fontWeight:800,fontSize:15,color:'#fff'}}>Seru Chores</span>
         </div>
         <p style={{fontSize:13,color:'#555'}}>
           Made with ❤️ for families everywhere · <a href="/app" style={{color:'#1D9E75',textDecoration:'none'}}>Open the app</a>

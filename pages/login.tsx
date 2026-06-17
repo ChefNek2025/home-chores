@@ -46,7 +46,7 @@ export default function LoginPage() {
       <div style={{ width: '100%', maxWidth: 400 }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>🏠</div>
-          <h1 style={{ fontSize: 28, fontWeight: 800, color: '#0D1117', letterSpacing: '-1px' }}>Home Chores</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 800, color: '#0D1117', letterSpacing: '-1px' }}>Seru Chores</h1>
           <p style={{ color: '#666', marginTop: 6 }}>{isSignup ? 'Create your family account' : 'Welcome back!'}</p>
         </div>
 

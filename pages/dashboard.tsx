@@ -38,7 +38,7 @@ export default function Dashboard() {
       <div style={{ background: '#fff', borderBottom: '1px solid #EBEBEB', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 24 }}>🏠</span>
-          <span style={{ fontWeight: 800, fontSize: 18, color: '#0D1117' }}>Home Chores</span>
+          <span style={{ fontWeight: 800, fontSize: 18, color: '#0D1117' }}>Seru Chores</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: 14, color: '#666' }}>{family?.name}</span>
