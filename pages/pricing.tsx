@@ -1,0 +1,69 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { supabase } from '../lib/supabase';
+
+export default function PricingPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState('');
+
+  async function checkout(priceId, plan) {
+    setLoading(plan);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { router.push('/login'); return; }
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ priceId, email: user.email }),
+    });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else { alert('Error: ' + data.error); setLoading(''); }
+  }
+
+  return (
+    <div style={{ fontFamily:'Inter,system-ui,sans-serif', minHeight:'100vh', background:'#F7F7F5' }}>
+      <div style={{ background:'#fff', borderBottom:'1px solid #EBEBEB', padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+          <span style={{ fontSize:24 }}>🏠</span>
+          <span style={{ fontWeight:800, fontSize:18, color:'#0D1117' }}>Seru Chores</span>
+        </div>
+        <button onClick={() => router.push('/login')} style={{ background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'8px 18px', fontWeight:700, fontSize:14, cursor:'pointer' }}>Log in</button>
+      </div>
+      <div style={{ textAlign:'center', padding:'56px 24px 40px' }}>
+        <h1 style={{ fontSize:40, fontWeight:800, color:'#0D1117', marginBottom:12 }}>Simple, honest pricing</h1>
+        <p style={{ fontSize:17, color:'#666' }}>14 days free · Cancel anytime · No hidden fees</p>
+      </div>
+      <div style={{ maxWidth:800, margin:'0 auto', padding:'0 24px 80px', display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20 }}>
+        <div style={{ background:'#fff', borderRadius:24, padding:32, border:'1.5px solid #EBEBEB' }}>
+          <div style={{ fontWeight:800, fontSize:18, color:'#0D1117', marginBottom:4 }}>Starter</div>
+          <div style={{ fontSize:42, fontWeight:800, color:'#0D1117', marginBottom:8 }}>$1.99<span style={{ fontSize:14, color:'#888' }}>/month</span></div>
+          <div style={{ background:'#E1F5EE', color:'#0F6E56', fontSize:12, fontWeight:700, padding:'4px 10px', borderRadius:99, display:'inline-block', marginBottom:20 }}>14 days free trial</div>
+          <ul style={{ listStyle:'none', marginBottom:28 }}>
+            {['1 family account','Up to 4 kids ages 6-17','Unlimited chores','Weekly pay tracking','Works on any phone'].map(f => (
+              <li key={f} style={{ display:'flex', gap:8, padding:'5px 0', fontSize:14, color:'#444' }}><span style={{ color:'#1D9E75' }}>✓</span>{f}</li>
+            ))}
+          </ul>
+          <button onClick={() => checkout('price_1TjSMT803CgXwbBDDbNm3VQ3', 'starter')} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:14, fontSize:15, fontWeight:700, cursor:'pointer' }}>
+            {loading === 'starter' ? 'Loading...' : 'Start free trial'}
+          </button>
+          <p style={{ textAlign:'center', fontSize:12, color:'#AAA', marginTop:10 }}>Card required · charged after 14 days</p>
+        </div>
+        <div style={{ background:'#0D1117', borderRadius:24, padding:32, border:'1.5px solid #1D9E75', position:'relative' }}>
+          <div style={{ position:'absolute', top:-12, left:'50%', transform:'translateX(-50%)', background:'#1D9E75', color:'#fff', fontSize:11, fontWeight:700, padding:'4px 14px', borderRadius:99 }}>MOST POPULAR</div>
+          <div style={{ fontWeight:800, fontSize:18, color:'#fff', marginBottom:4 }}>Family Pro</div>
+          <div style={{ fontSize:42, fontWeight:800, color:'#fff', marginBottom:8 }}>$4.99<span style={{ fontSize:14, color:'#888' }}>/month</span></div>
+          <div style={{ background:'#1D9E75', color:'#fff', fontSize:12, fontWeight:700, padding:'4px 10px', borderRadius:99, display:'inline-block', marginBottom:20 }}>14 days free trial</div>
+          <ul style={{ listStyle:'none', marginBottom:28 }}>
+            {['Everything in Starter','Photo proof of chores','Parent approval required','Savings goals for kids','Streak and badge rewards','Weekly email summary'].map(f => (
+              <li key={f} style={{ display:'flex', gap:8, padding:'5px 0', fontSize:14, color:'#ccc' }}><span style={{ color:'#1D9E75' }}>✓</span>{f}</li>
+            ))}
+          </ul>
+          <button onClick={() => checkout('price_1TjVL4803CgXwbBDWwvo9qhC', 'pro')} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:14, fontSize:15, fontWeight:700, cursor:'pointer' }}>
+            {loading === 'pro' ? 'Loading...' : 'Start free trial'}
+          </button>
+          <p style={{ textAlign:'center', fontSize:12, color:'#555', marginTop:10 }}>Card required · charged after 14 days</p>
+        </div>
+      </div>
+    </div>
+  );
+}
