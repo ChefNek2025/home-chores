@@ -43,7 +43,7 @@ export default function PricingPage() {
               <li key={f} style={{ display:'flex', gap:8, padding:'5px 0', fontSize:14, color:'#444' }}><span style={{ color:'#1D9E75' }}>✓</span>{f}</li>
             ))}
           </ul>
-          <button onClick={() => checkout('price_1TjSMT803CgXwbBDDbNm3VQ3', 'starter')} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:14, fontSize:15, fontWeight:700, cursor:'pointer' }}>
+          <button onClick={() => checkout('price_1Tjllk5T5WOtD5yfzHCMzAal', 'starter')} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:14, fontSize:15, fontWeight:700, cursor:'pointer' }}>
             {loading === 'starter' ? 'Loading...' : 'Start free trial'}
           </button>
           <p style={{ textAlign:'center', fontSize:12, color:'#AAA', marginTop:10 }}>Card required · charged after 14 days</p>
@@ -58,7 +58,7 @@ export default function PricingPage() {
               <li key={f} style={{ display:'flex', gap:8, padding:'5px 0', fontSize:14, color:'#ccc' }}><span style={{ color:'#1D9E75' }}>✓</span>{f}</li>
             ))}
           </ul>
-          <button onClick={() => checkout('price_1TjVL4803CgXwbBDWwvo9qhC', 'pro')} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:14, fontSize:15, fontWeight:700, cursor:'pointer' }}>
+          <button onClick={() => checkout('price_1Tjlmz5T5WOtD5yfSDDkQofp', 'pro')} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:14, fontSize:15, fontWeight:700, cursor:'pointer' }}>
             {loading === 'pro' ? 'Loading...' : 'Start free trial'}
           </button>
           <p style={{ textAlign:'center', fontSize:12, color:'#555', marginTop:10 }}>Card required · charged after 14 days</p>
