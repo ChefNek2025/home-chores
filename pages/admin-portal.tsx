@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 
-const ADMIN_EMAIL = 'your@email.com'; // Change this to YOUR email!
+const ADMIN_EMAIL = 'hailu.nekatibeb2025@gmail.com'; // Change this to YOUR email!
 
 export default function AdminPortal() {
   const router = useRouter();
