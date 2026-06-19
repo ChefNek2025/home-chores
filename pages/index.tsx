@@ -155,7 +155,7 @@ export default function LandingPage()  {
       <div>
         <div style={{fontSize:13, fontWeight:700, color:'#FCDD09', textTransform:'uppercase', letterSpacing:'2px', marginBottom:16}}>🇪🇹 Built by an Ethiopian family</div>
         <h2 style={{fontSize:'clamp(24px,4vw,36px)', fontWeight:800, color:'#fff', lineHeight:1.2, marginBottom:16, letterSpacing:'-0.5px'}}>
-          ሰሩ — Make it happen.<br/>
+         ሥሩ — Make it happen.<br/>
           <span style={{color:'#078930'}}>For every family,</span><br/>
           <span style={{color:'#FCDD09'}}>in every home.</span>
         </h2>
@@ -173,12 +173,12 @@ export default function LandingPage()  {
       </div>
       <div style={{textAlign:'center'}}>
         <div style={{fontSize:80, marginBottom:16}}>🏠</div>
-        <div style={{fontSize:32, fontWeight:800, color:'#fff', marginBottom:8}}>ሰሩ</div>
+        <div style={{fontSize:32, fontWeight:800, color:'#fff', marginBottom:8}}>ሥሩ</div>
         <div style={{fontSize:16, color:'#FCDD09', fontWeight:600, marginBottom:4}}>Seru — "Make it"</div>
         <div style={{fontSize:14, color:'#8B949E'}}>In Amharic, the language of Ethiopia</div>
         <div style={{marginTop:24, display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
           {[
-            {lang:'🇪🇹 አማርኛ', word:'ሰሩ', meaning:'Make it'},
+            {lang:'🇪🇹 አማርኛ', word:'ሥሩ', meaning:'Make it'},
             {lang:'🇺🇸 English', word:'Do it', meaning:'Get it done'},
             {lang:'🇸🇦 العربية', word:'افعلها', meaning:'Make it'},
             {lang:'🇪🇸 Español', word:'Hazlo', meaning:'Make it'},
