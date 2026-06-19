@@ -106,6 +106,22 @@ export default function LoginPage() {
           </button>
 
           <p style={{ textAlign: 'center', marginTop: 20, fontSize: 14, color: '#666' }}>
+            {!isSignup && (
+  <div style={{ textAlign:'right', marginBottom:8 }}>
+    <button onClick={async () => {
+      if (!email) { setError('Enter your email first'); return; }
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: 'https://seruchores.vercel.app/reset-password',
+      });
+      if (error) setError(error.message);
+      else setMessage('✅ Password reset email sent! Check your inbox.');
+    }} style={{ background:'none', border:'none', color:'#1D9E75', fontSize:13, cursor:'pointer', fontWeight:600 }}>
+      Forgot password?
+    </button>
+  </div>
+)}
+
+<p style={{ textAlign: 'center', marginTop: 20, fontSize: 14, color: '#666' }}></p>
             {isSignup ? 'Already have an account?' : "Don't have an account?"}{' '}
             <button onClick={() => { setIsSignup(!isSignup); setError(''); setMessage(''); }}
               style={{ color: '#1D9E75', fontWeight: 700, background: 'none', border: 'none', cursor: 'pointer', fontSize: 14 }}>
