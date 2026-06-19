@@ -50,7 +50,7 @@ export default function LandingPage()  {
         <div className="hero-inner" style={{display:'flex',alignItems:'center',gap:64}}>
           <div style={{flex:1}}>
             <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'#E1F5EE',color:'#0F6E56',fontWeight:700,fontSize:13,padding:'6px 14px',borderRadius:99,marginBottom:24}}>
-              ✨ Seru means "Make it" in Amharic 🇪🇹
+              ✨ 🇪🇹 Seru means "Make it" in Amharic · ሥሩ
             </div>
             <h1 style={{fontSize:'clamp(36px,5vw,60px)',fontWeight:800,lineHeight:1.1,letterSpacing:'-1.5px',color:'#0D1117',marginBottom:20}}>
              Seru — Make it happen.<br/><span style={{color:'#1D9E75'}}>Your kids earn it.</span>
@@ -149,8 +149,57 @@ export default function LandingPage()  {
           ))}
         </div>
       </section>
+      <section style={{background:'linear-gradient(135deg, #078930 0%, #FCDD09 50%, #EF3340 100%)', padding:'3px 0'}}>
+  <div style={{background:'#0D1117', margin:'3px 0', padding:'56px 24px'}}>
+    <div style={{maxWidth:900, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:48, alignItems:'center'}}>
+      <div>
+        <div style={{fontSize:13, fontWeight:700, color:'#FCDD09', textTransform:'uppercase', letterSpacing:'2px', marginBottom:16}}>🇪🇹 Built by an Ethiopian family</div>
+        <h2 style={{fontSize:'clamp(24px,4vw,36px)', fontWeight:800, color:'#fff', lineHeight:1.2, marginBottom:16, letterSpacing:'-0.5px'}}>
+          ሰሩ — Make it happen.<br/>
+          <span style={{color:'#078930'}}>For every family,</span><br/>
+          <span style={{color:'#FCDD09'}}>in every home.</span>
+        </h2>
+        <p style={{fontSize:15, color:'#8B949E', lineHeight:1.7, marginBottom:24}}>
+          Seru Chores was created by an Ethiopian family in Maryland to help parents everywhere teach their kids responsibility, hard work, and the value of money — just like our parents taught us.
+        </p>
+        <p style={{fontSize:15, color:'#8B949E', lineHeight:1.7, marginBottom:24}}>
+          Whether you speak Amharic, Arabic, English, or Spanish — every family deserves a simple way to manage chores and pay their kids fairly.
+        </p>
+        <div style={{display:'flex', gap:12, flexWrap:'wrap' as any}}>
+          {['🇪🇹 Ethiopian families','🇺🇸 American families','🇸🇦 Arab families','🌍 Families worldwide'].map(t => (
+            <span key={t} style={{background:'rgba(255,255,255,.08)', color:'#C9D1D9', fontSize:12, fontWeight:600, padding:'6px 12px', borderRadius:99}}>{t}</span>
+          ))}
+        </div>
+      </div>
+      <div style={{textAlign:'center'}}>
+        <div style={{fontSize:80, marginBottom:16}}>🏠</div>
+        <div style={{fontSize:32, fontWeight:800, color:'#fff', marginBottom:8}}>ሰሩ</div>
+        <div style={{fontSize:16, color:'#FCDD09', fontWeight:600, marginBottom:4}}>Seru — "Make it"</div>
+        <div style={{fontSize:14, color:'#8B949E'}}>In Amharic, the language of Ethiopia</div>
+        <div style={{marginTop:24, display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+          {[
+            {lang:'🇪🇹 አማርኛ', word:'ሰሩ', meaning:'Make it'},
+            {lang:'🇺🇸 English', word:'Do it', meaning:'Get it done'},
+            {lang:'🇸🇦 العربية', word:'افعلها', meaning:'Make it'},
+            {lang:'🇪🇸 Español', word:'Hazlo', meaning:'Make it'},
+          ].map(l => (
+            <div key={l.lang} style={{background:'rgba(255,255,255,.05)', borderRadius:12, padding:'12px'}}>
+              <div style={{fontSize:11, color:'#666', marginBottom:4}}>{l.lang}</div>
+              <div style={{fontSize:18, fontWeight:800, color:'#fff'}}>{l.word}</div>
+              <div style={{fontSize:11, color:'#555'}}>{l.meaning}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style={{background:'linear-gradient(135deg, #078930 0%, #FCDD09 50%, #EF3340 100%)', height:3}}/>
+</section>
 
-      <section id="how-it-works" style={{background:'#F0FBF7',padding:'80px 24px'}}>
+<section style={{background:'linear-gradient(135deg, #078930 0%, #FCDD09 50%, #EF3340 100%)', padding:'3px 0'}}></section>
+
+<section id="how-it-works" style={{background:'#F0FBF7',padding:'80px 24px'}}>
+        
         <div style={{maxWidth:800,margin:'0 auto'}}>
           <div style={{textAlign:'center',marginBottom:56}}>
             <p style={{fontSize:13,fontWeight:700,color:'#1D9E75',textTransform:'uppercase',letterSpacing:'2px',marginBottom:12}}>How it works</p>
