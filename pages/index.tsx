@@ -59,7 +59,7 @@ export default function LandingPage()  {
               Assign daily chores, let kids check off jobs on their phone, and pay them weekly — without the nagging, the arguments, or the sticky notes on the fridge.
             </p>
             <div className="hero-ctas" style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <a href="/app" className="btn-green">Start free trial →</a>
+              <a href="/login" className="btn-green">Start free trial →</a>
               <a href="#how-it-works" className="btn-outline">See how it works</a>
             </div>
             <p style={{fontSize:13,color:'#AAA',marginTop:16}}>No account needed · Works on any phone · Free to try</p>
