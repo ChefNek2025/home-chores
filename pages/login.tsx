@@ -36,8 +36,11 @@ export default function LoginPage() {
     } else {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) { setError(error.message); setLoading(false); return; }
-     if (data.user) router.push('/dashboard');
-    }
+     if (data.user) {
+  const { data: family } = await supabase.from('families').select('plan').eq('id', data.user.id).single();
+  if (family?.plan === 'free') router.push('/pricing');
+  else router.push('/dashboard');
+}
     setLoading(false);
   }
 
