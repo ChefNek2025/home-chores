@@ -310,7 +310,7 @@ export default function LandingPage()  {
             Make this the summer<br/>they actually help out.
           </h2>
           <p style={{fontSize:17,color:'#8B949E',marginBottom:36,lineHeight:1.7}}>Set up your family in 3 minutes. No credit card. No app to download.</p>
-          <a href="/app" className="btn-green" style={{fontSize:18,padding:'16px 36px'}}>Start for free →</a>
+          <a href="/login"className="btn-green" style={{fontSize:18,padding:'16px 36px'}}>Start for free →</a>
           <p style={{color:'#444',fontSize:13,marginTop:16}}>2 weeks free · then $1.99/month · cancel anytime</p>
         </div>
       </section>
