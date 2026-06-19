@@ -100,7 +100,10 @@ export default function Dashboard() {
 
       {/* Tabs */}
       <div style={{ background:'#fff', borderBottom:'1px solid #EBEBEB', padding:'0 24px', display:'flex', gap:4 }}>
-        {[{id:'overview',label:'📊 Overview'},{id:'kids',label:'👧 Kids'},{id:'chores',label:'📋 Chores'},{id:'earnings',label:'💵 Earnings'}].map(t => (
+        {[{id:'overview',label:'📊 Overview'},{id:'kids',label:'👧 Kids'},{id:'chores',label:'📋 Chores'},{id:'earnings',label:'💵 Earnings'},
+{id:'leaderboard',label:'🏆 Leaderboard'}
+          
+        ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             style={{ padding:'14px 16px', fontSize:14, fontWeight:500, border:'none', background:'none', cursor:'pointer', borderBottom: tab===t.id ? '2px solid #1D9E75' : '2px solid transparent', color: tab===t.id ? '#1D9E75' : '#666' }}>
             {t.label}
@@ -260,15 +263,60 @@ export default function Dashboard() {
 
         {/* EARNINGS */}
         {tab === 'earnings' && (
-          <div>
-            <h2 style={{ fontSize:20, fontWeight:800, color:'#0D1117', marginBottom:16 }}>Earnings</h2>
-            <div style={{ background:'#fff', borderRadius:20, padding:24, border:'1px solid #EBEBEB', textAlign:'center' }}>
-              <div style={{ fontSize:40, marginBottom:12 }}>💵</div>
-              <p style={{ color:'#666', fontSize:15 }}>Full earnings tracking coming next! For now use the app to track payments.</p>
-              <a href="/app" style={{ display:'inline-block', marginTop:16, background:'#1D9E75', color:'#fff', borderRadius:12, padding:'10px 24px', fontWeight:700, textDecoration:'none' }}>Go to app →</a>
+  <div>
+    <h2 style={{ fontSize:20, fontWeight:800, color:'#0D1117', marginBottom:16 }}>Earnings</h2>
+    <div style={{ background:'#fff', borderRadius:20, padding:24, border:'1px solid #EBEBEB', textAlign:'center' }}>
+      <div style={{ fontSize:40, marginBottom:12 }}>💵</div>
+      <p style={{ color:'#666', fontSize:15 }}>Full earnings tracking coming next! For now use the app to track payments.</p>
+      <a href="/app" style={{ display:'inline-block', marginTop:16, background:'#1D9E75', color:'#fff', borderRadius:12, padding:'10px 24px', fontWeight:700, textDecoration:'none' }}>Go to app →</a>
+    </div>
+  </div>
+)}
+
+{tab === 'leaderboard' && (
+  <div>
+    <h2 style={{ fontSize:20, fontWeight:800, color:'#0D1117', marginBottom:8 }}>🏆 Family Leaderboard</h2>
+    <p style={{ fontSize:14, color:'#888', marginBottom:20 }}>Who is winning this week?</p>
+    {kids.length === 0 ? (
+      <div style={{ background:'#fff', borderRadius:20, padding:32, textAlign:'center', border:'1px solid #EBEBEB' }}>
+        <div style={{ fontSize:40, marginBottom:12 }}>👧</div>
+        <p style={{ color:'#666' }}>Add kids first to see the leaderboard!</p>
+        <button onClick={() => setTab('kids')} style={{ marginTop:16, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontWeight:700, cursor:'pointer' }}>Add kids →</button>
+      </div>
+    ) : (
+      <div style={{ display:'grid', gap:12 }}>
+        {kids.map((kid, index) => {
+          const kidChores = chores.filter(c => c.assign_to === 'both' || c.assign_to === kid.id);
+          const totalPay = kidChores.reduce((a, c) => a + Number(c.pay_per_completion), 0);
+          const medals = ['🥇','🥈','🥉'];
+          const colors = ['#FFD700','#C0C0C0','#CD7F32'];
+          return (
+            <div key={kid.id} style={{ background:'#fff', borderRadius:20, padding:24, border:`2px solid ${index===0?'#FFD700':'#EBEBEB'}`, display:'flex', alignItems:'center', gap:16 }}>
+              <div style={{ fontSize:40 }}>{medals[index] || '🎖️'}</div>
+              <div style={{ width:48, height:48, borderRadius:14, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:20, color:'#0F6E56' }}>{kid.name[0]}</div>
+              <div style={{ flex:1 }}>
+                <div style={{ fontWeight:800, fontSize:18, color:'#0D1117' }}>{kid.name}</div>
+                <div style={{ fontSize:13, color:'#888', marginTop:2 }}>Age {kid.age} · {kidChores.length} chores assigned</div>
+                <div style={{ marginTop:8, height:8, background:'#F0F0F0', borderRadius:99, overflow:'hidden' }}>
+                  <div style={{ height:'100%', background: index===0?'#FFD700':index===1?'#C0C0C0':'#1D9E75', borderRadius:99, width:`${Math.min(100, kidChores.length * 15)}%`, transition:'width .5s' }} />
+                </div>
+              </div>
+              <div style={{ textAlign:'right' }}>
+                <div style={{ fontSize:24, fontWeight:800, color:'#1D9E75' }}>${totalPay.toFixed(2)}</div>
+                <div style={{ fontSize:12, color:'#888' }}>potential/day</div>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        })}
+        <div style={{ background:'linear-gradient(135deg,#0D1117,#1a2332)', borderRadius:20, padding:24, textAlign:'center' }}>
+          <div style={{ fontSize:32, marginBottom:8 }}>🔥</div>
+          <div style={{ fontWeight:800, fontSize:16, color:'#fff', marginBottom:4 }}>Keep the streak going!</div>
+          <div style={{ fontSize:13, color:'#666' }}>Kids who complete all chores 7 days in a row earn a bonus badge</div>
+        </div>
+      </div>
+    )}
+  </div>
+)}
 
       </div>
     </div>
