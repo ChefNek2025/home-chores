@@ -160,7 +160,7 @@ export default function LandingPage()  {
           <span style={{color:'#FCDD09'}}>in every home.</span>
         </h2>
         <p style={{fontSize:15, color:'#8B949E', lineHeight:1.7, marginBottom:24}}>
-          Seru Chores was created by an Ethiopian family in Maryland to help parents everywhere teach their kids responsibility, hard work, and the value of money — just like our parents taught us.
+          Seru Chores was created by an Ethiopian family in Virginia to help parents everywhere teach their kids responsibility, hard work, and the value of money — just like our parents taught us.
         </p>
         <p style={{fontSize:15, color:'#8B949E', lineHeight:1.7, marginBottom:24}}>
           Whether you speak Amharic, Arabic, English, or Spanish — every family deserves a simple way to manage chores and pay their kids fairly.
