@@ -41,9 +41,9 @@ export default function LoginPage() {
   if (family?.plan === 'free') router.push('/pricing');
   else router.push('/dashboard');
 }
+   }
     setLoading(false);
   }
-
   return (
     <div style={{ fontFamily: 'Inter, system-ui, sans-serif', minHeight: '100vh', background: '#F0FBF7', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ width: '100%', maxWidth: 400 }}>

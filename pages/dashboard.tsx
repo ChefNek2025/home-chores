@@ -20,11 +20,14 @@ export default function Dashboard() {
   useEffect(() => { load(); }, []);
 
   async function load() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { router.push('/login'); return; }
-    const { data: fam } = await supabase.from('families').select('*').eq('id', user.id).single();
+const { data: fam } = await supabase.from('families').select('*').eq('id', user.id).single();
     if (!fam || fam.plan === 'free') { router.push('/pricing'); return; }
     setFamily(fam);
+    const { data: kidsData } = await supabase.from('kids').select('*').eq('family_id', user.id);
+    setKids(kidsData || []);
+    const { data: choresData } = await supabase.from('chores').select('*').eq('family_id', user.id);
+    setChores(choresData || []);
+    setLoading(false);
   }
 
   async function addKid() {
