@@ -46,76 +46,73 @@ export default function LandingPage()  {
         </div>
       </nav>
 
-      <section style={{maxWidth:1100,margin:'0 auto',padding:'72px 24px 64px'}}>
-        <div className="hero-inner" style={{display:'flex',alignItems:'center',gap:64}}>
-          <div style={{flex:1}}>
-            <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'#E1F5EE',color:'#0F6E56',fontWeight:700,fontSize:13,padding:'6px 14px',borderRadius:99,marginBottom:24}}>
-              ✨ 🇪🇹 Seru means "Make it" in Amharic · ሥሩ
+     <section style={{position:'relative',minHeight:'600px',display:'flex',alignItems:'center',overflow:'hidden'}}>
+  {/* Background image */}
+  <div style={{position:'absolute',top:0,left:0,right:0,bottom:0,backgroundImage:'url(/family.jpg)',backgroundSize:'cover',backgroundPosition:'center',zIndex:0}}/>
+  {/* Dark overlay */}
+  <div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:'rgba(0,0,0,0.55)',zIndex:1}}/>
+  {/* Content */}
+  <div style={{position:'relative',zIndex:2,maxWidth:1100,margin:'0 auto',padding:'80px 24px',width:'100%'}}>
+    <div className="hero-inner" style={{display:'flex',alignItems:'center',gap:64}}>
+      <div style={{flex:1}}>
+        <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(29,158,117,0.9)',color:'#fff',fontWeight:700,fontSize:13,padding:'6px 14px',borderRadius:99,marginBottom:24}}>
+          ✨ 🇪🇹 Seru means "Make it" in Amharic · ሰሩ
+        </div>
+        <h1 style={{fontSize:'clamp(36px,5vw,64px)',fontWeight:800,lineHeight:1.1,letterSpacing:'-1.5px',color:'#fff',marginBottom:20}}>
+          Seru — Make it happen.<br/><span style={{color:'#1D9E75'}}>Your kids earn it.</span>
+        </h1>
+        <p style={{fontSize:18,color:'rgba(255,255,255,0.85)',lineHeight:1.7,marginBottom:32,maxWidth:460}}>
+          Assign daily chores, let kids check off jobs on their phone, and pay them weekly — without the nagging, the arguments, or the sticky notes on the fridge.
+        </p>
+        <div className="hero-ctas" style={{display:'flex',gap:12,flexWrap:'wrap'}}>
+          <a href="/login" className="btn-green" style={{fontSize:17,padding:'16px 32px'}}>Start free trial →</a>
+          <a href="#how-it-works" style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(255,255,255,0.15)',color:'#fff',fontWeight:600,fontSize:15,padding:'15px 24px',borderRadius:14,textDecoration:'none',border:'1.5px solid rgba(255,255,255,0.3)',backdropFilter:'blur(10px)'}}>See how it works</a>
+        </div>
+        <p style={{fontSize:13,color:'rgba(255,255,255,0.6)',marginTop:16}}>14 days free · $1.99/month · Cancel anytime</p>
+        <div style={{display:'flex',gap:32,marginTop:40,paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.2)',flexWrap:'wrap'}}>
+          {[{num:'3 min',label:'to set up your family'},{num:'$1.99',label:'per month'},{num:'14 days',label:'free trial'}].map(s=>(
+            <div key={s.label}>
+              <div style={{fontSize:28,fontWeight:800,color:'#1D9E75'}}>{s.num}</div>
+              <div style={{fontSize:13,color:'rgba(255,255,255,0.6)',marginTop:2}}>{s.label}</div>
             </div>
-            <h1 style={{fontSize:'clamp(36px,5vw,60px)',fontWeight:800,lineHeight:1.1,letterSpacing:'-1.5px',color:'#0D1117',marginBottom:20}}>
-             Seru — Make it happen.<br/><span style={{color:'#1D9E75'}}>Your kids earn it.</span>
-            </h1>
-            <p style={{fontSize:18,color:'#555',lineHeight:1.7,marginBottom:32,maxWidth:460}}>
-              Assign daily chores, let kids check off jobs on their phone, and pay them weekly — without the nagging, the arguments, or the sticky notes on the fridge.
-            </p>
-            <div className="hero-ctas" style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <a href="/login" className="btn-green">Start free trial →</a>
-              <a href="#how-it-works" className="btn-outline">See how it works</a>
-            </div>
-            <p style={{fontSize:13,color:'#AAA',marginTop:16}}>No account needed · Works on any phone · Free to try</p>
-            <div style={{display:'flex',gap:32,marginTop:40,paddingTop:32,borderTop:'1px solid #EBEBEB',flexWrap:'wrap'}}>
-              {[{num:'3 min',label:'to set up your family'},{num:'$1.99',label:'to get started'},{num:'100%',label:'works on any phone'}].map(s=>(
-                <div key={s.label}>
-                  <div style={{fontSize:28,fontWeight:800,color:'#1D9E75'}}>{s.num}</div>
-                  <div style={{fontSize:13,color:'#888',marginTop:2}}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-            <div style={{display:'flex',gap:16,marginBottom:16}}>
-  <div style={{position:'relative'}}>
-    <img src="/girl.jpg" alt="Girl" style={{width:130,height:170,objectFit:'cover',objectPosition:'top',borderRadius:20,border:'3px solid #1D9E75'}}/>
-    <div style={{position:'absolute',bottom:8,left:8,background:'#1D9E75',color:'#fff',fontSize:11,fontWeight:700,padding:'4px 10px',borderRadius:99}}>✅ All done!</div>
-  </div>
-  <div style={{position:'relative'}}>
-    <img src="/boy.jpg" alt="Boy" style={{width:130,height:170,objectFit:'cover',objectPosition:'top',borderRadius:20,border:'3px solid #FCDD09'}}/>
-    <div style={{position:'absolute',bottom:8,left:8,background:'#FCDD09',color:'#085041',fontSize:11,fontWeight:700,padding:'4px 10px',borderRadius:99}}>💪 3 left!</div>
-  </div>
-</div>
-          </div>
-          <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:16,flexShrink:0}}>
-            <div className="phone-frame">
-              <div className="phone-screen">
-                <div style={{background:'#0F6E56',padding:'16px 16px 12px',color:'#fff'}}>
-                  <div style={{fontSize:11,opacity:.7,marginBottom:4}}>Monday · June 16</div>
-                  <div style={{fontWeight:800,fontSize:17}}>Hey Liam! 👋</div>
-                  <div style={{fontSize:12,opacity:.85,marginTop:2}}>5 chores · $9.50 today</div>
-                  <div style={{marginTop:10,background:'rgba(255,255,255,.25)',borderRadius:99,height:6}}>
-                    <div style={{background:'#fff',borderRadius:99,height:6,width:'60%'}}/>
-                  </div>
-                </div>
-                {[
-                  {name:'Wash dishes',pay:'$2.00',done:true,emoji:'🍽️'},
-                  {name:'Make all beds',pay:'$2.00',done:true,emoji:'🛏️'},
-                  {name:'Walk dog (morning)',pay:'$2.00',done:true,emoji:'🐕'},
-                  {name:'Take out trash',pay:'$1.50',done:false,emoji:'🗑️'},
-                  {name:'Walk dog (evening)',pay:'$2.00',done:false,emoji:'🐕'},
-                ].map((c,i)=>(
-                  <div key={i} className="chore-item">
-                    {c.done
-                      ? <div style={{width:20,height:20,borderRadius:'50%',background:'#1D9E75',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg></div>
-                      : <div style={{width:20,height:20,borderRadius:'50%',border:'2px solid #CCC',flexShrink:0}}/>
-                    }
-                    <span style={{opacity:c.done?.45:1,textDecoration:c.done?'line-through':'none',flex:1}}>{c.emoji} {c.name}</span>
-                    <span style={{color:'#1D9E75',fontWeight:700,fontSize:12}}>{c.pay}</span>
-                  </div>
-                ))}
-                <div style={{padding:'10px 12px',fontSize:12,color:'#1D9E75',fontWeight:600,background:'#F0FBF7',textAlign:'center'}}>💪 2 more to go!</div>
+          ))}
+        </div>
+      </div>
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:16,flexShrink:0}}>
+        <div className="phone-frame">
+          <div className="phone-screen">
+            <div style={{background:'#0F6E56',padding:'16px 16px 12px',color:'#fff'}}>
+              <div style={{fontSize:11,opacity:.7,marginBottom:4}}>Monday · June 16</div>
+              <div style={{fontWeight:800,fontSize:17}}>Hey Liam! 👋</div>
+              <div style={{fontSize:12,opacity:.85,marginTop:2}}>5 chores · $9.50 today</div>
+              <div style={{marginTop:10,background:'rgba(255,255,255,.25)',borderRadius:99,height:6}}>
+                <div style={{background:'#fff',borderRadius:99,height:6,width:'60%'}}/>
               </div>
             </div>
-            <div style={{fontSize:12,color:'#AAA',textAlign:'center'}}>Works like a real app on their phone</div>
+            {[
+              {name:'Wash dishes',pay:'$2.00',done:true,emoji:'🍽️'},
+              {name:'Make all beds',pay:'$2.00',done:true,emoji:'🛏️'},
+              {name:'Walk dog (morning)',pay:'$2.00',done:true,emoji:'🐕'},
+              {name:'Take out trash',pay:'$1.50',done:false,emoji:'🗑️'},
+              {name:'Walk dog (evening)',pay:'$2.00',done:false,emoji:'🐕'},
+            ].map((c,i)=>(
+              <div key={i} className="chore-item">
+                {c.done
+                  ? <div style={{width:20,height:20,borderRadius:'50%',background:'#1D9E75',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg></div>
+                  : <div style={{width:20,height:20,borderRadius:'50%',border:'2px solid #CCC',flexShrink:0}}/>
+                }
+                <span style={{opacity:c.done?.45:1,textDecoration:c.done?'line-through':'none',flex:1}}>{c.emoji} {c.name}</span>
+                <span style={{color:'#1D9E75',fontWeight:700,fontSize:12}}>{c.pay}</span>
+              </div>
+            ))}
+            <div style={{padding:'10px 12px',fontSize:12,color:'#1D9E75',fontWeight:600,background:'#F0FBF7',textAlign:'center'}}>💪 2 more to go!</div>
           </div>
         </div>
-      </section>
+        <div style={{fontSize:12,color:'rgba(255,255,255,0.6)',textAlign:'center'}}>Works like a real app on their phone</div>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section style={{background:'#0D1117',padding:'56px 24px'}}>
         <div style={{maxWidth:900,margin:'0 auto',textAlign:'center'}}>
