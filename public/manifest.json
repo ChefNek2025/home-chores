@@ -1,0 +1,18 @@
+{
+  "name": "Seru Chores",
+  "short_name": "Seru",
+  "description": "Family chore tracker — assign jobs, track progress, pay your kids weekly",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF8",
+  "theme_color": "#1D9E75",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

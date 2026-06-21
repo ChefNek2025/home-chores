@@ -12,7 +12,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#1D9E75" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Seru Chores" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
       </Head>
       <Component {...pageProps} />
     </>
