@@ -20,16 +20,19 @@ export default function Dashboard() {
   useEffect(() => { load(); }, []);
 
   async function load() {
-const { data: fam } = await supabase.from('families').select('*').eq('id', user.id).single();
-    if (!fam || fam.plan === 'free') { router.push('/pricing'); return; }
+    const { data: authData } = await supabase.auth.getUser();
+    if (!authData?.user) { router.push('/login'); return; }
+    const userId = authData.user.id;
+    const { data: fam } = await supabase.from('families').select('*').eq('id', userId).single();
+    if (!fam) { setLoading(false); return; }
+    if (fam.plan === 'free') { router.push('/pricing'); return; }
     setFamily(fam);
-    const { data: kidsData } = await supabase.from('kids').select('*').eq('family_id', user.id);
+    const { data: kidsData } = await supabase.from('kids').select('*').eq('family_id', userId);
     setKids(kidsData || []);
-    const { data: choresData } = await supabase.from('chores').select('*').eq('family_id', user.id);
+    const { data: choresData } = await supabase.from('chores').select('*').eq('family_id', userId);
     setChores(choresData || []);
     setLoading(false);
   }
-
   async function addKid() {
     if (!newKidName.trim()) return;
     const { data: { user } } = await supabase.auth.getUser();
