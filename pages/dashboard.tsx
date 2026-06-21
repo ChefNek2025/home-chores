@@ -108,8 +108,7 @@ export default function Dashboard() {
       <div style={{ background:'#fff', borderBottom:'1px solid #EBEBEB', padding:'0 24px', display:'flex', gap:4 }}>
         {[{id:'overview',label:'📊 Overview'},{id:'kids',label:'👧 Kids'},{id:'chores',label:'📋 Chores'},{id:'earnings',label:'💵 Earnings'},
 {id:'leaderboard',label:'🏆 Leaderboard'},
-{id:'photos',label:'📸 Photos'},
-{id:'photos',label:'📸 Photos'}
+{id:'photos',label:'📸 Photos'},
           
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
