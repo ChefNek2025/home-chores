@@ -4,6 +4,7 @@ import Layout from '../../components/Layout';
 import TabBar from '../../components/TabBar';
 import { Toast, useToast } from '../../components/Toast';
 import { useAppState } from '../../lib/useAppState';
+import { supabase } from '../../lib/supabase';
 import { KIDS, KidId } from '../../lib/types';
 
 const TABS = [
@@ -56,10 +57,30 @@ function TodayTab({ kidId, app, toast }: { kidId: KidId; app: ReturnType<typeof 
   const earned = app.earnedOnDate(kidId, today);
   const { done, total } = app.choreProgress(kidId, today);
   const pct = total > 0 ? Math.round((done/total)*100) : 0;
-  function toggle(choreId: string, instance = '') {
+ function toggle(choreId: string, instance = '') {
     const was = app.isDone(kidId, choreId, today, instance);
     app.toggleCheck(kidId, choreId, today, instance);
     if (!was) toast.show('Nice work! Keep it up!');
+  }
+
+  async function uploadPhoto(choreId: string, file: File) {
+    const fileName = `${kidId}-${choreId}-${Date.now()}.jpg`;
+    const { data, error } = await supabase.storage
+      .from('chore-photos')
+      .upload(fileName, file);
+    if (error) { toast.show('Photo upload failed!'); return; }
+    const { data: urlData } = supabase.storage
+      .from('chore-photos')
+      .getPublicUrl(fileName);
+    await supabase.from('chore_photos').insert({
+      family_id: kid.id,
+      kid_id: kidId,
+      chore_id: choreId,
+      photo_url: urlData.publicUrl,
+      status: 'pending',
+      date: today,
+    });
+    toast.show('📸 Photo submitted for approval!');
   }
   return (
     <div className="space-y-4">
@@ -83,15 +104,24 @@ function TodayTab({ kidId, app, toast }: { kidId: KidId; app: ReturnType<typeof 
         {chores.map(chore => {
           const d = app.isDone(kidId, chore.id, today);
           return (
-            <button key={chore.id} onClick={() => toggle(chore.id)}
-              className={`w-full flex items-center gap-3 py-3 px-3 rounded-xl transition-all text-left ${d ? 'bg-brand-50' : 'hover:bg-gray-50'}`}>
-              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${d ? 'bg-brand-400 border-brand-400' : 'border-gray-300'}`}>
-                {d && <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
-              </div>
-              <span className="text-xl">{chore.emoji}</span>
-              <span className={`text-sm flex-1 ${d ? 'line-through text-gray-400' : 'text-gray-700'}`}>{chore.name}</span>
-              <span className="text-sm font-semibold text-brand-600">${chore.payPerCompletion.toFixed(2)}</span>
-            </button>
+            <div key={chore.id} className="space-y-2">
+              <button onClick={() => toggle(chore.id)}
+                className={`w-full flex items-center gap-3 py-3 px-3 rounded-xl transition-all text-left ${d ? 'bg-brand-50' : 'hover:bg-gray-50'}`}>
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${d ? 'bg-brand-400 border-brand-400' : 'border-gray-300'}`}>
+                  {d && <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                </div>
+                <span className="text-xl">{chore.emoji}</span>
+                <span className={`text-sm flex-1 ${d ? 'line-through text-gray-400' : 'text-gray-700'}`}>{chore.name}</span>
+                <span className="text-sm font-semibold text-brand-600">${chore.payPerCompletion.toFixed(2)}</span>
+              </button>
+              {d && (
+                <label style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 12px', background:'#F0FBF7', borderRadius:10, cursor:'pointer', fontSize:13, color:'#0F6E56', fontWeight:600, marginTop:4 }}>
+                  📸 Add photo proof
+                  <input type="file" accept="image/*" capture="environment" style={{ display:'none' }}
+                    onChange={e => { if (e.target.files?.[0]) uploadPhoto(chore.id, e.target.files[0]); }} />
+                </label>
+              )}
+            </div>
           );
         })}
       </div>
