@@ -71,6 +71,16 @@ export default function LandingPage()  {
                 </div>
               ))}
             </div>
+            <div style={{display:'flex',gap:16,marginBottom:16}}>
+  <div style={{position:'relative'}}>
+    <img src="/girl.jpg" alt="Girl" style={{width:130,height:170,objectFit:'cover',objectPosition:'top',borderRadius:20,border:'3px solid #1D9E75'}}/>
+    <div style={{position:'absolute',bottom:8,left:8,background:'#1D9E75',color:'#fff',fontSize:11,fontWeight:700,padding:'4px 10px',borderRadius:99}}>✅ All done!</div>
+  </div>
+  <div style={{position:'relative'}}>
+    <img src="/boy.jpg" alt="Boy" style={{width:130,height:170,objectFit:'cover',objectPosition:'top',borderRadius:20,border:'3px solid #FCDD09'}}/>
+    <div style={{position:'absolute',bottom:8,left:8,background:'#FCDD09',color:'#085041',fontSize:11,fontWeight:700,padding:'4px 10px',borderRadius:99}}>💪 3 left!</div>
+  </div>
+</div>
           </div>
           <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:16,flexShrink:0}}>
             <div className="phone-frame">
