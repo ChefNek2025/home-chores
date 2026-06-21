@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function Dashboard() {
   const [newChoreFreq, setNewChoreFreq] = useState('daily');
   const [newChoreKid, setNewChoreKid] = useState('both');
   const [newChoreEmoji, setNewChoreEmoji] = useState('🏠');
+  const [photos, setPhotos] = useState<any[]>([]);
 
   useEffect(() => { load(); }, []);
 
@@ -31,6 +33,8 @@ export default function Dashboard() {
     setKids(kidsData || []);
     const { data: choresData } = await supabase.from('chores').select('*').eq('family_id', userId);
     setChores(choresData || []);
+    const { data: photosData } = await supabase.from('chore_photos').select('*').eq('family_id', userId).order('created_at', { ascending: false });
+    setPhotos(photosData || []);
     setLoading(false);
   }
   async function addKid() {
@@ -103,7 +107,9 @@ export default function Dashboard() {
       {/* Tabs */}
       <div style={{ background:'#fff', borderBottom:'1px solid #EBEBEB', padding:'0 24px', display:'flex', gap:4 }}>
         {[{id:'overview',label:'📊 Overview'},{id:'kids',label:'👧 Kids'},{id:'chores',label:'📋 Chores'},{id:'earnings',label:'💵 Earnings'},
-{id:'leaderboard',label:'🏆 Leaderboard'}
+{id:'leaderboard',label:'🏆 Leaderboard'},
+{id:'photos',label:'📸 Photos'},
+{id:'photos',label:'📸 Photos'}
           
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
