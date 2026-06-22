@@ -103,15 +103,14 @@ async function uploadPhoto(choreId: string, file: File) {
     const { error } = await supabase.storage.from('chore-photos').upload(fileName, stampedFile);
     if (error) { toast.show('Photo upload failed!'); return; }
     const { data: urlData } = supabase.storage.from('chore-photos').getPublicUrl(fileName);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { toast.show('Please log in first!'); return; }
-    await supabase.from('chore_photos').insert({
+   await supabase.from('chore_photos').insert({
       family_id: user.id,
-      kid_id: kidId,
-      chore_id: choreId,
+      kid_id: null,
+      chore_id: null,
       photo_url: urlData.publicUrl,
       status: 'pending',
       date: today,
+    });
     });
     toast.show('📸 Photo submitted with timestamp!');
   }
@@ -138,7 +137,7 @@ async function uploadPhoto(choreId: string, file: File) {
           const d = app.isDone(kidId, chore.id, today);
           return (
             <div key={chore.id} className="space-y-2">
-              <button onClick={() => toggle(chore.id)}
+              <button onClick={() => ontoggle(chore.id)}
                 className={`w-full flex items-center gap-3 py-3 px-3 rounded-xl transition-all text-left ${d ? 'bg-brand-50' : 'hover:bg-gray-50'}`}>
                 <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${d ? 'bg-brand-400 border-brand-400' : 'border-gray-300'}`}>
                   {d && <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
