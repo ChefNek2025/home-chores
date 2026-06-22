@@ -103,8 +103,10 @@ async function uploadPhoto(choreId: string, file: File) {
     const { error } = await supabase.storage.from('chore-photos').upload(fileName, stampedFile);
     if (error) { toast.show('Photo upload failed!'); return; }
     const { data: urlData } = supabase.storage.from('chore-photos').getPublicUrl(fileName);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { toast.show('Please log in first!'); return; }
     await supabase.from('chore_photos').insert({
-      family_id: kid.id,
+      family_id: user.id,
       kid_id: kidId,
       chore_id: choreId,
       photo_url: urlData.publicUrl,
@@ -112,24 +114,6 @@ async function uploadPhoto(choreId: string, file: File) {
       date: today,
     });
     toast.show('📸 Photo submitted with timestamp!');
-  }
-    const fileName = `${kidId}-${choreId}-${Date.now()}.jpg`;
-    const { data, error } = await supabase.storage
-      .from('chore-photos')
-      .upload(fileName, file);
-    if (error) { toast.show('Photo upload failed!'); return; }
-    const { data: urlData } = supabase.storage
-      .from('chore-photos')
-      .getPublicUrl(fileName);
-    await supabase.from('chore_photos').insert({
-      family_id: kid.id,
-      kid_id: kidId,
-      chore_id: choreId,
-      photo_url: urlData.publicUrl,
-      status: 'pending',
-      date: today,
-    });
-    toast.show('📸 Photo submitted for approval!');
   }
   return (
     <div className="space-y-4">
