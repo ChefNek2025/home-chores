@@ -18,7 +18,8 @@ export default function Dashboard() {
   const [newChoreKid, setNewChoreKid] = useState('both');
   const [newChoreEmoji, setNewChoreEmoji] = useState('🏠');
   const [photos, setPhotos] = useState<any[]>([]);
-
+const [aiReport, setAiReport] = useState('');
+const [aiLoading, setAiLoading] = useState(false);
   useEffect(() => { load(); }, []);
 
   async function load() {
@@ -108,7 +109,8 @@ export default function Dashboard() {
       <div style={{ background:'#fff', borderBottom:'1px solid #EBEBEB', padding:'0 24px', display:'flex', gap:4 }}>
         {[{id:'overview',label:'📊 Overview'},{id:'kids',label:'👧 Kids'},{id:'chores',label:'📋 Chores'},{id:'earnings',label:'💵 Earnings'},
 {id:'leaderboard',label:'🏆 Leaderboard'},
-{id:'photos',label:'📸 Photos'},
+{id:'photos',label:'📸 Photos'},
+
           
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
@@ -424,4 +426,50 @@ export default function Dashboard() {
       </div>
     </div>
   );
+  function AIReport({ familyId }: { familyId: string }) {
+  const [report, setReport] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function generateReport() {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/weekly-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ familyId }),
+      });
+      const data = await res.json();
+      if (data.report) setReport(data.report);
+      else setReport('Could not generate report. Please try again.');
+    } catch(e) {
+      setReport('Error generating report.');
+    }
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ background:'linear-gradient(135deg,#0D1117,#1a2332)', borderRadius:20, padding:24, border:'1px solid #1D9E75' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:16 }}>
+        <div style={{ fontSize:32 }}>🤖</div>
+        <div>
+          <div style={{ fontWeight:800, fontSize:16, color:'#fff' }}>AI Weekly Report</div>
+          <div style={{ fontSize:13, color:'#666' }}>Powered by Claude AI</div>
+        </div>
+      </div>
+      {report ? (
+        <div style={{ background:'rgba(255,255,255,0.05)', borderRadius:14, padding:20, marginBottom:16 }}>
+          <p style={{ color:'#C9D1D9', fontSize:14, lineHeight:1.8, whiteSpace:'pre-wrap' }}>{report}</p>
+        </div>
+      ) : (
+        <p style={{ color:'#666', fontSize:14, marginBottom:16, lineHeight:1.6 }}>
+          Generate a personalized AI report about your family's chore progress, earnings, and achievements this week!
+        </p>
+      )}
+      <button onClick={generateReport} disabled={loading}
+        style={{ width:'100%', background: loading ? '#333' : '#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'12px', fontSize:14, fontWeight:700, cursor: loading ? 'default' : 'pointer' }}>
+        {loading ? '🤖 Generating report...' : '✨ Generate AI Report'}
+      </button>
+    </div>
+  );
+}
 }
