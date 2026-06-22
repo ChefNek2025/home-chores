@@ -63,7 +63,56 @@ function TodayTab({ kidId, app, toast }: { kidId: KidId; app: ReturnType<typeof 
     if (!was) toast.show('Nice work! Keep it up!');
   }
 
-  async function uploadPhoto(choreId: string, file: File) {
+async function uploadPhoto(choreId: string, file: File) {
+    const canvas = document.createElement('canvas');
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.src = url;
+    await new Promise(resolve => img.onload = resolve);
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(img, 0, 0);
+    // Add timestamp watermark
+    const now = new Date();
+    const timestamp = now.toLocaleString('en-US', { 
+      month: 'short', day: 'numeric', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+    const chore = app.kidChores(kidId).find(c => c.id === choreId);
+    const watermark = `${chore?.name || 'Chore'} · ${timestamp}`;
+    const fontSize = Math.max(20, img.width / 25);
+    ctx.font = `bold ${fontSize}px Arial`;
+    const padding = fontSize * 0.6;
+    const textWidth = ctx.measureText(watermark).width;
+    // Background bar
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+    ctx.fillRect(0, img.height - fontSize * 2.5, img.width, fontSize * 2.5);
+    // Seru Chores branding
+    ctx.fillStyle = '#1D9E75';
+    ctx.font = `bold ${fontSize * 0.7}px Arial`;
+    ctx.fillText('✓ Seru Chores', padding, img.height - fontSize * 1.6);
+    // Timestamp
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `bold ${fontSize * 0.85}px Arial`;
+    ctx.fillText(watermark, padding, img.height - fontSize * 0.5);
+    // Convert to blob
+    const blob = await new Promise<Blob>(resolve => canvas.toBlob(b => resolve(b!), 'image/jpeg', 0.9));
+    const stampedFile = new File([blob], file.name, { type: 'image/jpeg' });
+    const fileName = `${kidId}-${choreId}-${Date.now()}.jpg`;
+    const { error } = await supabase.storage.from('chore-photos').upload(fileName, stampedFile);
+    if (error) { toast.show('Photo upload failed!'); return; }
+    const { data: urlData } = supabase.storage.from('chore-photos').getPublicUrl(fileName);
+    await supabase.from('chore_photos').insert({
+      family_id: kid.id,
+      kid_id: kidId,
+      chore_id: choreId,
+      photo_url: urlData.publicUrl,
+      status: 'pending',
+      date: today,
+    });
+    toast.show('📸 Photo submitted with timestamp!');
+  }
     const fileName = `${kidId}-${choreId}-${Date.now()}.jpg`;
     const { data, error } = await supabase.storage
       .from('chore-photos')
