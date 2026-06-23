@@ -1,4 +1,6 @@
-import { useState } from 'react';
+const fs = require('fs');
+
+const code = `import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 
@@ -103,4 +105,7 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
+}`;
+
+fs.writeFileSync('pages/login.tsx', code);
+console.log('done!');
