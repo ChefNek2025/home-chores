@@ -6,11 +6,15 @@ export default function PricingPage() {
   const router = useRouter();
   const [loading, setLoading] = useState('');
 
-  async function checkout(priceId: string, plan: string) {
+  aasync function checkout(priceId: string, plan: string) {
     setLoading(plan);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { router.push('/login'); return; }
-
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) { 
+      alert('Please log in first!');
+      router.push('/login'); 
+      return; 
+    }
+    const user = session.user;
     try {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
