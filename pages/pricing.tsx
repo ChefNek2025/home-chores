@@ -38,7 +38,7 @@ export default function PricingPage() {
       const data = await res.json();
       console.log('Stripe response:', data);
       if (data.url) {
-        window.location.href = data.url;
+        window.open(data.url, '_self');
       } else {
         alert('Stripe error: ' + JSON.stringify(data));
         setLoading('');
