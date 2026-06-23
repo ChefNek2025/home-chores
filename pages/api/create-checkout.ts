@@ -17,12 +17,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       subscription_data: {
         trial_period_days: 14,
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/dashboard?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/pricing`,
+      success_url: `https://seruchores.vercel.app/dashboard?success=true`,
+      cancel_url: `https://seruchores.vercel.app/pricing`,
     });
 
     res.status(200).json({ url: session.url });
   } catch (err: any) {
+    console.error('Stripe error:', err);
     res.status(500).json({ error: err.message });
   }
 }
