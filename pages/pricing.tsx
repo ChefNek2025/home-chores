@@ -70,7 +70,7 @@ export default function PricingPage() {
             ))}
           </ul>
           <button
-            onClick={() => checkout('price_1TjkQ65T5WOtD5yfsu9OyuuG', 'starter')}
+          onClick={() => checkout('price_1Tjllk5T5WOtD5yfzHCMzAal', 'starter')}
             disabled={loading !== ''}
             style={{ width:'100%', background: loading==='starter' ? '#ccc' : '#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:'14px', fontSize:15, fontWeight:700, cursor: loading!=='' ? 'default' : 'pointer' }}>
             {loading === 'starter' ? 'Loading...' : 'Start free trial →'}
@@ -98,7 +98,7 @@ export default function PricingPage() {
             ))}
           </ul>
           <button
-            onClick={() => checkout('price_1TjkQ65T5WOtD5yfJ9sPdO15', 'pro')}
+            onClick={() => checkout('price_1Tjlmz5T5WOtD5yfSDDkQofp', 'pro')}
             disabled={loading !== ''}
             style={{ width:'100%', background: loading==='pro' ? '#ccc' : '#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:'14px', fontSize:15, fontWeight:700, cursor: loading!=='' ? 'default' : 'pointer' }}>
             {loading === 'pro' ? 'Loading...' : 'Start free trial →'}
