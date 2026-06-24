@@ -84,7 +84,8 @@ export default function KidPage({ kidName }: { kidName: string }) {
       const now = new Date();
       const timestamp = now.toLocaleString('en-US', {
         month: 'short', day: 'numeric', year: 'numeric',
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: true
       });
       const chore = chores.find(c => c.id === choreId);
       const watermark = (chore?.name || 'Chore') + ' · ' + timestamp;
