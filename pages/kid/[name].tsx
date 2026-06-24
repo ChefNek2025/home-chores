@@ -74,9 +74,13 @@ export default function KidPage({ kidName }: { kidName: string }) {
     try {
       const canvas = document.createElement('canvas');
       const img = new Image();
+      img.crossOrigin = 'anonymous';
       const url = URL.createObjectURL(file);
-      img.src = url;
-      await new Promise(resolve => img.onload = resolve);
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = url;
+      });
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext('2d')!;
