@@ -75,9 +75,9 @@ export default function KidPage({ kidName }: { kidName: string }) {
       // Upload original photo first
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { setMessage('Please log in!'); return; }
-      const now = new Date();
-      const datePart = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const timePart = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      const nowDate = new Date();
+      const datePart = nowDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const timePart = nowDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
       const chore = chores.find(c => c.id === choreId);
       const fileName = kid.id + '-' + choreId + '-' + Date.now() + '.jpg';
       const { error: uploadError } = await supabase.storage.from('chore-photos').upload(fileName, file);
