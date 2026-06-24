@@ -246,8 +246,8 @@ function EarningsTab({ kidId, app }: { kidId: KidId; app: ReturnType<typeof useA
 }
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: [{ params:{ name:'liam' } }, { params:{ name:'sofia' } }],
-  fallback: false,
+  paths: [],
+  fallback: 'blocking',
 });
 
 export const getStaticProps: GetStaticProps = async ({ params }) => ({
