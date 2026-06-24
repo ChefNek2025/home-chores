@@ -72,6 +72,30 @@ export default function KidPage({ kidName }: { kidName: string }) {
 
   async function uploadPhoto(choreId: string, file: File) {
     try {
+      // Upload original photo first
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { setMessage('Please log in!'); return; }
+      const now = new Date();
+      const datePart = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const timePart = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      const chore = chores.find(c => c.id === choreId);
+      const fileName = kid.id + '-' + choreId + '-' + Date.now() + '.jpg';
+      const { error: uploadError } = await supabase.storage.from('chore-photos').upload(fileName, file);
+      if (uploadError) { setMessage('Upload failed: ' + uploadError.message); return; }
+      const { data: urlData } = supabase.storage.from('chore-photos').getPublicUrl(fileName);
+      await supabase.from('chore_photos').insert({
+        family_id: user.id,
+        kid_id: kid.id,
+        chore_id: choreId,
+        photo_url: urlData.publicUrl,
+        status: 'pending',
+        date: today,
+        notes: (chore?.name || 'Chore') + ' · ' + datePart + ' · ' + timePart,
+      });
+      setMessage('📸 Photo submitted! ' + datePart + ' ' + timePart);
+      setTimeout(() => setMessage(''), 4000);
+      return;
+      // Canvas watermark below (kept for reference)
       const canvas = document.createElement('canvas');
       const img = new Image();
       img.crossOrigin = 'anonymous';
