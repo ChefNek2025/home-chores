@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+const fs = require('fs');
+
+const code = `import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 
@@ -294,7 +296,7 @@ export default function Dashboard() {
                   >
                     <span style={{ fontSize:22 }}>{chore.emoji}</span>
                     <span style={{ flex:1, fontSize:14, fontWeight:500, color:'#0D1117' }}>{chore.name}</span>
-                    <span style={{ fontSize:13, color:'#1D9E75', fontWeight:700 }}>${chore.pay}</span>
+                    <span style={{ fontSize:13, color:'#1D9E75', fontWeight:700 }}>\${chore.pay}</span>
                     <span style={{ fontSize:12, color:'#999', background:'#F0F0F0', padding:'2px 8px', borderRadius:99 }}>+ Add</span>
                   </div>
                 ))}
@@ -363,7 +365,7 @@ export default function Dashboard() {
                     <span style={{ fontSize:22 }}>{c.emoji}</span>
                     <div style={{ flex:1 }}>
                       <div style={{ fontWeight:600, color:'#0D1117' }}>{c.name}</div>
-                      <div style={{ fontSize:12, color:'#888' }}>{c.freq} · ${c.pay_per_completion}</div>
+                      <div style={{ fontSize:12, color:'#888' }}>{c.freq} · \${c.pay_per_completion}</div>
                     </div>
                     <button onClick={() => removeChore(c.id)} style={{ background:'none', border:'none', cursor:'pointer', fontSize:16 }}>🗑️</button>
                   </div>
@@ -414,7 +416,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div style={{ textAlign:'right' }}>
-                        <div style={{ fontSize:24, fontWeight:800, color:'#1D9E75' }}>${totalPay.toFixed(2)}</div>
+                        <div style={{ fontSize:24, fontWeight:800, color:'#1D9E75' }}>\${totalPay.toFixed(2)}</div>
                         <div style={{ fontSize:12, color:'#888' }}>potential/day</div>
                       </div>
                     </div>
@@ -529,3 +531,7 @@ function AIReport({ familyId }: { familyId: string }) {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('pages/dashboard.tsx', code);
+console.log('done! size:', code.length);
