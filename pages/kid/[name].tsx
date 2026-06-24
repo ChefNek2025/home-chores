@@ -105,6 +105,10 @@ export default function KidPage({ kidName }: { kidName: string }) {
       if (uploadError) { setMessage('Upload failed!'); return; }
       const { data: urlData } = supabase.storage.from('chore-photos').getPublicUrl(fileName);
       const { data: { user } } = await supabase.auth.getUser();
+      const nowTs = new Date();
+      const datePart = nowTs.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+      const timePart = nowTs.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true });
+      const chore = chores.find(c => c.id === choreId);
       await supabase.from('chore_photos').insert({
         family_id: user!.id,
         kid_id: kid.id,
@@ -112,6 +116,7 @@ export default function KidPage({ kidName }: { kidName: string }) {
         photo_url: urlData.publicUrl,
         status: 'pending',
         date: today,
+        notes: (chore?.name || 'Chore') + ' · ' + datePart + ' · ' + timePart,
       });
       setMessage('📸 Photo submitted with timestamp!');
       setTimeout(() => setMessage(''), 3000);
