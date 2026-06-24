@@ -86,13 +86,11 @@ export default function KidPage({ kidName }: { kidName: string }) {
       const ctx = canvas.getContext('2d')!;
       ctx.drawImage(img, 0, 0);
       const now = new Date();
-      const timestamp = now.toLocaleString('en-US', {
-        month: 'short', day: 'numeric', year: 'numeric',
-        hour: '2-digit', minute: '2-digit', second: '2-digit',
-        hour12: true
-      });
+      const datePart = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const timePart = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
       const chore = chores.find(c => c.id === choreId);
-      const watermark = (chore?.name || 'Chore') + ' · ' + timestamp;
+      const watermark = (chore?.name || 'Chore') + ' · ' + datePart;
+      const timeLine = timePart;
       const fontSize = Math.max(20, img.width / 25);
       const padding = fontSize * 0.6;
       ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
@@ -102,7 +100,8 @@ export default function KidPage({ kidName }: { kidName: string }) {
       ctx.fillText('✓ Seru Chores', padding, img.height - fontSize * 1.6);
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold ' + (fontSize * 0.85) + 'px Arial';
-      ctx.fillText(watermark, padding, img.height - fontSize * 0.5);
+      ctx.fillText(watermark, padding, img.height - fontSize * 1.0);
+      ctx.fillText(timeLine, padding, img.height - fontSize * 0.1);
       const blob = await new Promise<Blob>(resolve => canvas.toBlob(b => resolve(b!), 'image/jpeg', 0.9));
       const stampedFile = new File([blob], file.name, { type: 'image/jpeg' });
       const fileName = kid.id + '-' + choreId + '-' + Date.now() + '.jpg';
