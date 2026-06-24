@@ -451,7 +451,7 @@ export default function Dashboard() {
                         <div style={{ width:40, height:40, borderRadius:12, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:16, color:'#0F6E56' }}>{kid?.name?.[0] || '?'}</div>
                         <div>
                           <div style={{ fontWeight:700, color:'#0D1117' }}>{kid?.name || 'Kid'}</div>
-                          <div style={{ fontSize:13, color:'#888' }}>{chore?.emoji} {chore?.name || 'Chore'} · {new Date(photo.created_at).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true})}</div>
+                          <div style={{ fontSize:13, color:'#888' }}>{chore?.emoji} {chore?.name || 'Chore'} · {new Date(photo.created_at).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'America/New_York'})}</div>
                         </div>
                         <div style={{ marginLeft:'auto', fontSize:12, fontWeight:700, padding:'4px 10px', borderRadius:99, background: photo.status==='approved'?'#E1F5EE':photo.status==='rejected'?'#FFF0F0':'#F7F7F5', color: photo.status==='approved'?'#0F6E56':photo.status==='rejected'?'#C00':'#888' }}>
                           {photo.status==='approved'?'✅ Approved':photo.status==='rejected'?'❌ Rejected':'⏳ Pending'}
