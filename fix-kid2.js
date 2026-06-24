@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+const fs = require('fs');
+
+const code = `import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { supabase } from '../../lib/supabase';
@@ -163,7 +165,7 @@ export default function KidPage({ kidName }: { kidName: string }) {
         </div>
         <div style={{ display:'flex', justifyContent:'space-between', marginBottom:8 }}>
           <span style={{ fontSize:13, opacity:0.8 }}>{done}/{total} chores done</span>
-          <span style={{ fontSize:13, fontWeight:700 }}>${earned.toFixed(2)} earned</span>
+          <span style={{ fontSize:13, fontWeight:700 }}>\${earned.toFixed(2)} earned</span>
         </div>
         <div style={{ background:'rgba(255,255,255,0.25)', borderRadius:99, height:8 }}>
           <div style={{ background:'#fff', borderRadius:99, height:8, width: pct + '%', transition:'width .5s' }} />
@@ -216,7 +218,7 @@ export default function KidPage({ kidName }: { kidName: string }) {
                   </div>
                   <span style={{ fontSize:22 }}>{chore.emoji}</span>
                   <span style={{ flex:1, fontSize:15, fontWeight:500, color: isDone ? '#888' : '#0D1117', textDecoration: isDone ? 'line-through' : 'none' }}>{chore.name}</span>
-                  <span style={{ fontSize:14, fontWeight:700, color:'#1D9E75' }}>${Number(chore.pay_per_completion).toFixed(2)}</span>
+                  <span style={{ fontSize:14, fontWeight:700, color:'#1D9E75' }}>\${Number(chore.pay_per_completion).toFixed(2)}</span>
                 </button>
                 {isDone && (
                   <label style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 16px 12px 56px', background:'#F0FBF7', cursor:'pointer', fontSize:13, color:'#0F6E56', fontWeight:600 }}>
@@ -237,3 +239,7 @@ export default function KidPage({ kidName }: { kidName: string }) {
 export const getServerSideProps = async (context: any) => {
   return { props: { kidName: context.params.name } };
 };
+`;
+
+fs.writeFileSync('pages/kid/[name].tsx', code);
+console.log('done! size:', code.length);
