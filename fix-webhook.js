@@ -1,4 +1,6 @@
-import Stripe from 'stripe';
+const fs = require('fs');
+
+const code = `import Stripe from 'stripe';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
 
@@ -55,4 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   res.status(200).json({ received: true });
-}
+}`;
+
+fs.writeFileSync('pages/api/stripe-webhook.ts', code);
+console.log('done!');
