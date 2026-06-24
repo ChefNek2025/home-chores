@@ -72,63 +72,32 @@ export default function KidPage({ kidName }: { kidName: string }) {
 
   async function uploadPhoto(choreId: string, file: File) {
     try {
-      // Upload original photo first
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { setMessage('Please log in!'); return; }
-      const nowDate = new Date();
-      const datePart = nowDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const timePart = nowDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-      const chore = chores.find(c => c.id === choreId);
-      const fileName = kid.id + '-' + choreId + '-' + Date.now() + '.jpg';
-      const { error: uploadError } = await supabase.storage.from('chore-photos').upload(fileName, file);
-      if (uploadError) { setMessage('Upload failed: ' + uploadError.message); return; }
-      const { data: urlData } = supabase.storage.from('chore-photos').getPublicUrl(fileName);
-      await supabase.from('chore_photos').insert({
-        family_id: user.id,
-        kid_id: kid.id,
-        chore_id: choreId,
-        photo_url: urlData.publicUrl,
-        status: 'pending',
-        date: today,
-        notes: (chore?.name || 'Chore') + ' · ' + datePart + ' · ' + timePart,
-      });
-      setMessage('📸 Photo submitted! ' + datePart + ' ' + timePart);
-      setTimeout(() => setMessage(''), 4000);
-      return;
-      // Canvas watermark below (kept for reference)
       const canvas = document.createElement('canvas');
       const img = new Image();
-      img.crossOrigin = 'anonymous';
       const url = URL.createObjectURL(file);
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-        img.src = url;
-      });
+      img.src = url;
+      await new Promise(resolve => img.onload = resolve);
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext('2d')!;
       ctx.drawImage(img, 0, 0);
       const now = new Date();
-      const datePart = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const timePart = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      const timestamp = now.toLocaleString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
       const chore = chores.find(c => c.id === choreId);
-      const watermark = (chore?.name || 'Chore') + ' · ' + datePart;
-      const timeLine = timePart;
-      const fontSize = Math.max(32, Math.round(img.width / 20));
-      const barHeight = fontSize * 3.5;
-      const padding = 20;
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-      ctx.fillRect(0, img.height - barHeight, img.width, barHeight);
+      const watermark = (chore?.name || 'Chore') + ' · ' + timestamp;
+      const fontSize = Math.max(20, img.width / 25);
+      const padding = fontSize * 0.6;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+      ctx.fillRect(0, img.height - fontSize * 2.5, img.width, fontSize * 2.5);
       ctx.fillStyle = '#1D9E75';
-      ctx.font = 'bold ' + Math.round(fontSize * 0.65) + 'px Arial';
-      ctx.fillText('✓ Seru Chores', padding, img.height - barHeight + fontSize * 0.9);
+      ctx.font = 'bold ' + (fontSize * 0.7) + 'px Arial';
+      ctx.fillText('✓ Seru Chores', padding, img.height - fontSize * 1.6);
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold ' + Math.round(fontSize * 0.85) + 'px Arial';
-      ctx.fillText(watermark, padding, img.height - barHeight + fontSize * 1.9);
-      ctx.fillStyle = '#FCDD09';
-      ctx.font = 'bold ' + Math.round(fontSize * 0.85) + 'px Arial';
-      ctx.fillText(timeLine, padding, img.height - barHeight + fontSize * 2.9);
+      ctx.font = 'bold ' + (fontSize * 0.85) + 'px Arial';
+      ctx.fillText(watermark, padding, img.height - fontSize * 0.5);
       const blob = await new Promise<Blob>(resolve => canvas.toBlob(b => resolve(b!), 'image/jpeg', 0.9));
       const stampedFile = new File([blob], file.name, { type: 'image/jpeg' });
       const fileName = kid.id + '-' + choreId + '-' + Date.now() + '.jpg';
