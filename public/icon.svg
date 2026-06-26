@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="o1" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#078930"/>
-      <stop offset="50%" style="stop-color:#FCDD09"/>
-      <stop offset="100%" style="stop-color:#EF3340"/>
+    <linearGradient id="o5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1565C0"/>
+      <stop offset="100%" style="stop-color:#0D1117"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="100" fill="url(#o1)"/>
-  <circle cx="256" cy="256" r="210" fill="rgba(0,0,0,0.45)"/>
+  <rect width="512" height="512" rx="100" fill="url(#o5)"/>
+  <ellipse cx="150" cy="130" rx="130" ry="65" fill="rgba(255,255,255,0.06)" transform="rotate(-25,150,130)"/>
   <text x="200" y="330" text-anchor="middle" font-family="Arial Black,Arial" font-size="260" font-weight="900" fill="#fff" opacity="0.7">S</text>
   <text x="310" y="360" text-anchor="middle" font-family="Arial" font-size="260" font-weight="900" fill="#FCDD09" opacity="0.95">ሥ</text>
 </svg>
