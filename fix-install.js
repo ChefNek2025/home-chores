@@ -1,0 +1,1 @@
+const fs=require('fs'); let code=fs.readFileSync('pages/index.tsx','utf8'); const anchor='</footer>'; const idx=code.lastIndexOf(anchor); console.log('anchor at:', idx, 'total:', code.length);

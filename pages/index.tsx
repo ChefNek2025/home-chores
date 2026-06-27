@@ -330,6 +330,30 @@ export default function LandingPage()  {
         <p style={{fontSize:13,color:'#555'}}>
           Made with ❤️ for families everywhere · <a href="/app" style={{color:'#1D9E75',textDecoration:'none'}}>Open the app</a>
         </p>
+      
+        {/* Install App Section */}
+        <div style={{ background:'#0D1117', padding:'60px 24px' }}>
+          <div style={{ maxWidth:600, margin:'0 auto', textAlign:'center' }}>
+            <div style={{ fontSize:40, marginBottom:12 }}>📱</div>
+            <h2 style={{ fontSize:26, fontWeight:900, color:'#fff', marginBottom:8 }}>Install Seru Chores on your phone</h2>
+            <p style={{ color:'#666', fontSize:14, marginBottom:28, lineHeight:1.6 }}>No App Store needed! Add it to your home screen in seconds.</p>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom:24 }}>
+              <div style={{ background:'#1A1A1A', borderRadius:20, padding:20, border:'1px solid #333', textAlign:'left' }}>
+                <div style={{ fontSize:28, marginBottom:8 }}>🍎</div>
+                <div style={{ fontWeight:800, fontSize:15, color:'#fff', marginBottom:10 }}>iPhone / iPad</div>
+                {['Open Safari browser','Go to seruchores.com','Tap Share button at bottom','Tap Add to Home Screen','Tap Add — done! 🎉'].map((step, i) => (<div key={i} style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}><div style={{ width:20, height:20, borderRadius:'50%', background:'#1D9E75', color:'#fff', fontSize:10, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>{i+1}</div><span style={{ fontSize:12, color:'#C9D1D9' }}>{step}</span></div>))}
+              </div>
+              <div style={{ background:'#1A1A1A', borderRadius:20, padding:20, border:'1px solid #333', textAlign:'left' }}>
+                <div style={{ fontSize:28, marginBottom:8 }}>🤖</div>
+                <div style={{ fontWeight:800, fontSize:15, color:'#fff', marginBottom:10 }}>Android</div>
+                {['Open Chrome browser','Go to seruchores.com','Tap Menu at top right','Tap Add to Home Screen','Tap Add — done! 🎉'].map((step, i) => (<div key={i} style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}><div style={{ width:20, height:20, borderRadius:'50%', background:'#1D9E75', color:'#fff', fontSize:10, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>{i+1}</div><span style={{ fontSize:12, color:'#C9D1D9' }}>{step}</span></div>))}
+              </div>
+            </div>
+            <div style={{ background:'#1D9E75', borderRadius:16, padding:'14px 24px' }}>
+              <span style={{ color:'#fff', fontWeight:700, fontSize:13 }}>Works like a real app — no App Store, no download, no cost!</span>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
     
