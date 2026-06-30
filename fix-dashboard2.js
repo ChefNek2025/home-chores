@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+const fs = require('fs');
+
+const code = `import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 
@@ -254,7 +256,7 @@ export default function Dashboard() {
                   <div key={chore.name} onClick={() => { setNewChoreName(chore.name); setNewChoreEmoji(chore.emoji); setNewChorePay(chore.pay); setChoreSearch(chore.name); setShowLibrary(false); }} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 16px', cursor:'pointer', borderBottom:'1px solid #F7F7F5' }} onMouseEnter={e => (e.currentTarget.style.background = '#F0FBF7')} onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
                     <span style={{ fontSize:22 }}>{chore.emoji}</span>
                     <span style={{ flex:1, fontSize:14, fontWeight:500, color:'#0D1117' }}>{chore.name}</span>
-                    <span style={{ fontSize:13, color:'#1D9E75', fontWeight:700 }}>${chore.pay}</span>
+                    <span style={{ fontSize:13, color:'#1D9E75', fontWeight:700 }}>\${chore.pay}</span>
                     <span style={{ fontSize:12, color:'#999', background:'#F0F0F0', padding:'2px 8px', borderRadius:99 }}>+ Add</span>
                   </div>
                 ))}
@@ -304,7 +306,7 @@ export default function Dashboard() {
                     <span style={{ fontSize:22 }}>{c.emoji}</span>
                     <div style={{ flex:1 }}>
                       <div style={{ fontWeight:600, color:'#0D1117' }}>{c.name}</div>
-                      <div style={{ fontSize:12, color:'#888' }}>{c.freq} · ${c.pay_per_completion}</div>
+                      <div style={{ fontSize:12, color:'#888' }}>{c.freq} · \${c.pay_per_completion}</div>
                     </div>
                     <button onClick={() => removeChore(c.id)} style={{ background:'none', border:'none', cursor:'pointer', fontSize:16 }}>🗑️</button>
                   </div>
@@ -353,7 +355,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div style={{ textAlign:'right' }}>
-                        <div style={{ fontSize:24, fontWeight:800, color:'#1D9E75' }}>${totalPay.toFixed(2)}</div>
+                        <div style={{ fontSize:24, fontWeight:800, color:'#1D9E75' }}>\${totalPay.toFixed(2)}</div>
                         <div style={{ fontSize:12, color:'#888' }}>potential/day</div>
                       </div>
                     </div>
@@ -426,7 +428,7 @@ export default function Dashboard() {
                       <div style={{ fontSize:13, color:'#888' }}>{kc.length} chores assigned</div>
                     </div>
                     <div style={{ textAlign:'right' }}>
-                      <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>${we.toFixed(2)}</div>
+                      <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>\${we.toFixed(2)}</div>
                       <div style={{ fontSize:11, color:'#888' }}>per day potential</div>
                     </div>
                   </div>
@@ -448,7 +450,7 @@ export default function Dashboard() {
                   <div style={{ width:44, height:44, borderRadius:10, background:'#1D9E75', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, color:'#fff', flexShrink:0 }}>GL</div>
                   <div style={{ flex:1 }}>
                     <div style={{ fontWeight:700, color:'#0D1117' }}>Greenlight <span style={{ background:'#1D9E75', color:'#fff', fontSize:10, padding:'2px 8px', borderRadius:99, marginLeft:6 }}>BEST</span></div>
-                    <div style={{ fontSize:12, color:'#666' }}>Real Visa card · Any age · $5.99/month · Parents control spending</div>
+                    <div style={{ fontSize:12, color:'#666' }}>Real Visa card · Any age · \$5.99/month · Parents control spending</div>
                   </div>
                   <div style={{ fontSize:13, color:'#1D9E75', fontWeight:700 }}>Get started →</div>
                 </div>
@@ -533,3 +535,7 @@ function AIReport({ familyId }: { familyId: string }) {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('pages/dashboard.tsx', code);
+console.log('done! size:', code.length, 'paykids:', code.indexOf('paykids'));
