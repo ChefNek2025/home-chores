@@ -264,9 +264,9 @@ export default function LandingPage()  {
           </div>
           <div className="pricing-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}}>
             {[
-              {name:'Free',price:'$4.99',period:'month',desc:'Start free trial.',features:['1 family','Up to 4 kids','Unlimited chores','Weekly pay tracking','Works on any phone'],cta:'Start free trial',href:'/app',popular:false},
-              {name:'Family Pro',price:'$4',period:'per month',desc:'Extra features for power families.',features:['Everything in Free','Photo proof of chores','Parent approval required','Savings goals for kids','Streak & badge rewards'],cta:'Coming soon',href:'#',popular:true},
-              {name:'Business',price:'Custom',period:'',desc:'For running multiple client families.',features:['Multiple families','Custom branding','Admin panel','White-label option','Priority support'],cta:'Contact us',href:'mailto:hello@homechores.app',popular:false},
+              {name:'Family Plan',price:'$4.99',period:'month',desc:'Everything included. 14 days free.',features:['Unlimited kids ages 6-17','Unlimited chores','Photo proof with timestamp','Weekly pay tracking','Family leaderboard','Savings goals','AI weekly report','Works worldwide'],cta:'Start free trial',href:'/pricing',popular:true}
+              
+              
             ].map(p=>(
               <div key={p.name} className={`pricing-card${p.popular?' popular':''}`} style={{position:'relative'}}>
                 {p.popular && <div style={{position:'absolute',top:-12,left:'50%',transform:'translateX(-50%)',background:'#1D9E75',color:'#fff',fontSize:11,fontWeight:700,padding:'4px 14px',borderRadius:99,whiteSpace:'nowrap'}}>MOST POPULAR</div>}
