@@ -1,33 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 
 export default function PricingPage() {
   const router = useRouter();
   const [loading, setLoading] = useState('');
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user || null);
-      console.log('Session user:', session?.user?.email);
-    });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
-      console.log('Auth change:', session?.user?.email);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
 
   async function checkout(priceId: string, plan: string) {
     setLoading(plan);
-    console.log('Current user:', user);
-    
-    if (!user) {
-      alert('You are not logged in! Please log in first.');
-      router.push('/login');
-      return;
-    }
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { router.push('/login'); return; }
 
     try {
       const res = await fetch('/api/create-checkout', {
@@ -38,9 +20,9 @@ export default function PricingPage() {
       const data = await res.json();
       console.log('Stripe response:', data);
       if (data.url) {
-        window.open(data.url, '_self');
+        window.location.href = data.url;
       } else {
-        alert('Stripe error: ' + JSON.stringify(data));
+        alert('Error: ' + JSON.stringify(data));
         setLoading('');
       }
     } catch(e: any) {
@@ -56,16 +38,10 @@ export default function PricingPage() {
           <span style={{ fontSize:24 }}>🏠</span>
           <span style={{ fontWeight:800, fontSize:18, color:'#0D1117' }}>Seru Chores</span>
         </div>
-        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-          {user ? (
-            <span style={{ fontSize:13, color:'#666' }}>✅ {user.email}</span>
-          ) : (
-            <button onClick={() => router.push('/login')}
-              style={{ background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'8px 18px', fontWeight:700, fontSize:14, cursor:'pointer' }}>
-              Log in
-            </button>
-          )}
-        </div>
+        <button onClick={() => router.push('/login')}
+          style={{ background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'8px 18px', fontWeight:700, fontSize:14, cursor:'pointer' }}>
+          Log in
+        </button>
       </div>
 
       <div style={{ textAlign:'center', padding:'56px 24px 40px' }}>
@@ -73,14 +49,10 @@ export default function PricingPage() {
           Simple, honest pricing
         </h1>
         <p style={{ fontSize:17, color:'#666' }}>14 days free · Cancel anytime · No hidden fees</p>
-        {!user && (
-          <div style={{ marginTop:16, background:'#FFF0F0', border:'1px solid #FFD0D0', borderRadius:12, padding:'12px 20px', display:'inline-block' }}>
-            <span style={{ color:'#C00', fontSize:14, fontWeight:600 }}>⚠️ Please log in before subscribing</span>
-          </div>
-        )}
       </div>
 
       <div style={{ maxWidth:800, margin:'0 auto', padding:'0 24px 80px', display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20 }}>
+
         <div style={{ background:'#fff', borderRadius:24, padding:32, border:'1.5px solid #EBEBEB' }}>
           <div style={{ fontWeight:800, fontSize:18, color:'#0D1117', marginBottom:4 }}>Starter</div>
           <div style={{ display:'flex', alignItems:'baseline', gap:4, marginBottom:8 }}>
@@ -97,7 +69,8 @@ export default function PricingPage() {
               </li>
             ))}
           </ul>
-          <button onClick={() => checkout('price_1Tjllk5T5WOtD5yfzHCMzAal', 'starter')}
+          <button
+          onClick={() => checkout('price_1Tjllk5T5WOtD5yfzHCMzAal', 'starter')}
             disabled={loading !== ''}
             style={{ width:'100%', background: loading==='starter' ? '#ccc' : '#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:'14px', fontSize:15, fontWeight:700, cursor: loading!=='' ? 'default' : 'pointer' }}>
             {loading === 'starter' ? 'Loading...' : 'Start free trial →'}
@@ -124,13 +97,15 @@ export default function PricingPage() {
               </li>
             ))}
           </ul>
-          <button onClick={() => checkout('price_1Tjlmz5T5WOtD5yfSDDkQofp', 'pro')}
+          <button
+            onClick={() => checkout('price_1Tjlmz5T5WOtD5yfSDDkQofp', 'pro')}
             disabled={loading !== ''}
             style={{ width:'100%', background: loading==='pro' ? '#ccc' : '#1D9E75', color:'#fff', border:'none', borderRadius:14, padding:'14px', fontSize:15, fontWeight:700, cursor: loading!=='' ? 'default' : 'pointer' }}>
             {loading === 'pro' ? 'Loading...' : 'Start free trial →'}
           </button>
           <p style={{ textAlign:'center', fontSize:12, color:'#555', marginTop:10 }}>Card required · charged after 14 days</p>
         </div>
+
       </div>
     </div>
   );
