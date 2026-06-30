@@ -500,6 +500,7 @@ export default function Dashboard() {
             </div>
           </div>
         )}
+        
         {/* PHOTOS */}
         {tab === 'photos' && (
           <div>
@@ -599,3 +600,4 @@ function AIReport({ familyId }: { familyId: string }) {
     </div>
   );
 }
+)}
