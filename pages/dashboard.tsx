@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [newChoreEmoji, setNewChoreEmoji] = useState('🏠');
   const [choreSearch, setChoreSearch] = useState('');
   const [showLibrary, setShowLibrary] = useState(false);
+  const [editingChore, setEditingChore] = useState<any>(null);
 
   const CHORE_EMOJIS = ['🧹','🍽️','🛏️','🗑️','🐕','🌀','🚿','👕','🌿','🐾','✨','🏠'];
 
@@ -118,6 +119,42 @@ export default function Dashboard() {
   async function removeChore(id: string) {
     await supabase.from('chores').delete().eq('id', id);
     setChores(chores.filter(c => c.id !== id));
+  }
+
+  async function editChore(chore: any) {
+    setEditingChore(chore);
+    setNewChoreName(chore.name);
+    setNewChoreEmoji(chore.emoji);
+    setNewChorePay(String(chore.pay_per_completion));
+    setNewChoreFreq(chore.freq);
+    setNewChoreKid(chore.assign_to);
+    setTab('chores');
+    window.scrollTo(0, 0);
+  }
+
+  async function saveChoreEdit() {
+    if (!editingChore || !newChoreName.trim()) return;
+    const { error } = await supabase.from('chores').update({
+      name: newChoreName.trim(),
+      emoji: newChoreEmoji,
+      pay_per_completion: parseFloat(newChorePay) || 1,
+      freq: newChoreFreq,
+      assign_to: newChoreKid,
+    }).eq('id', editingChore.id);
+    if (!error) {
+      setChores(chores.map(c => c.id === editingChore.id ? {
+        ...c,
+        name: newChoreName.trim(),
+        emoji: newChoreEmoji,
+        pay_per_completion: parseFloat(newChorePay) || 1,
+        freq: newChoreFreq,
+        assign_to: newChoreKid,
+      } : c));
+      setEditingChore(null);
+      setNewChoreName('');
+      setNewChorePay('2.00');
+      setChoreSearch('');
+    }
   }
 
   async function logout() {
@@ -262,7 +299,7 @@ export default function Dashboard() {
               </div>
             )}
             <div style={{ background:'#fff', borderRadius:20, padding:24, border:'1px solid #EBEBEB', marginBottom:16 }}>
-              <h3 style={{ fontSize:14, fontWeight:600, color:'#888', textTransform:'uppercase' as any, letterSpacing:'0.5px', marginBottom:16 }}>{newChoreName ? 'Customize & add' : 'Add a custom chore'}</h3>
+              <h3 style={{ fontSize:14, fontWeight:600, color:editingChore?'#1D9E75':'#888', textTransform:'uppercase' as any, letterSpacing:'0.5px', marginBottom:16 }}>{editingChore ? '✏️ Editing chore' : newChoreName ? 'Customize & add' : 'Add a custom chore'}</h3>
               <div style={{ display:'flex', flexWrap:'wrap' as any, gap:8, marginBottom:12 }}>
                 {CHORE_EMOJIS.map(e => (
                   <button key={e} onClick={() => setNewChoreEmoji(e)} style={{ width:36, height:36, borderRadius:8, border: newChoreEmoji===e ? '2px solid #1D9E75' : '1px solid #E0E0E0', background: newChoreEmoji===e ? '#E1F5EE' : '#fff', fontSize:18, cursor:'pointer' }}>{e}</button>
@@ -293,7 +330,14 @@ export default function Dashboard() {
                   </select>
                 </div>
               </div>
-              <button onClick={addChore} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'11px', fontSize:14, fontWeight:700, cursor:'pointer' }}>+ Add chore</button>
+              {editingChore ? (
+                <div style={{ display:'flex', gap:8 }}>
+                  <button onClick={saveChoreEdit} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'11px', fontSize:14, fontWeight:700, cursor:'pointer' }}>✅ Save changes</button>
+                  <button onClick={() => { setEditingChore(null); setNewChoreName(''); setNewChorePay('2.00'); setChoreSearch(''); }} style={{ flex:1, background:'#F7F7F5', color:'#333', border:'1px solid #E0E0E0', borderRadius:12, padding:'11px', fontSize:14, fontWeight:700, cursor:'pointer' }}>❌ Cancel</button>
+                </div>
+              ) : (
+                <button onClick={addChore} style={{ width:'100%', background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'11px', fontSize:14, fontWeight:700, cursor:'pointer' }}>+ Add chore</button>
+              )}
             </div>
             {chores.length === 0 ? (
               <div style={{ background:'#fff', borderRadius:20, padding:32, textAlign:'center', border:'1px solid #EBEBEB', color:'#888' }}>No chores yet. Search above or add a custom chore!</div>
@@ -306,6 +350,7 @@ export default function Dashboard() {
                       <div style={{ fontWeight:600, color:'#0D1117' }}>{c.name}</div>
                       <div style={{ fontSize:12, color:'#888' }}>{c.freq} · ${c.pay_per_completion}</div>
                     </div>
+                    <button onClick={() => editChore(c)} style={{ background:'none', border:'1px solid #1D9E75', borderRadius:8, padding:'4px 10px', cursor:'pointer', fontSize:12, color:'#1D9E75', fontWeight:600, marginRight:6 }}>✏️ Edit</button>
                     <button onClick={() => removeChore(c.id)} style={{ background:'none', border:'none', cursor:'pointer', fontSize:16 }}>🗑️</button>
                   </div>
                 ))}
