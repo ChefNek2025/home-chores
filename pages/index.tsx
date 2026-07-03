@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic';
 
 
 function InstallTutorial() {
-  const [os, setOs] = React.useState('ios');
-  const [step, setStep] = React.useState(0);
+  const [os, setOs] = useState('ios');
+  const [step, setStep] = useState(0);
 
   const iosSteps = [
     { num:1, title:'Open Safari browser', hint:'Must use Safari — not Chrome!', icon:'🧭' },
