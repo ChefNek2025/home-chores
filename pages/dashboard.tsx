@@ -488,16 +488,7 @@ export default function Dashboard() {
             <div style={{ background:'#fff', borderRadius:20, padding:24, border:'1px solid #EBEBEB', marginBottom:16 }}>
               <h3 style={{ fontSize:14, fontWeight:700, color:'#0D1117', marginBottom:4 }}>🏆 Give kids a real debit card</h3>
               <p style={{ fontSize:12, color:'#aaa', marginBottom:16 }}>Kids get a real Visa debit card. You control every purchase. See spending in real time!</p>
-              <a href="https://greenlight.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', marginBottom:10 }}>
-                <div style={{ display:'flex', alignItems:'center', gap:12, background:'#F0FBF7', borderRadius:14, padding:14, border:'2px solid #1D9E75' }}>
-                  <div style={{ width:44, height:44, borderRadius:10, background:'#1D9E75', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, color:'#fff', flexShrink:0 }}>GL</div>
-                  <div style={{ flex:1 }}>
-                    <div style={{ fontWeight:700, color:'#0D1117' }}>Greenlight <span style={{ background:'#1D9E75', color:'#fff', fontSize:10, padding:'2px 8px', borderRadius:99, marginLeft:6 }}>BEST</span></div>
-                    <div style={{ fontSize:12, color:'#666' }}>Real Visa card · Any age · $5.99/month · Parents control spending</div>
-                  </div>
-                  <div style={{ fontSize:13, color:'#1D9E75', fontWeight:700 }}>Get started →</div>
-                </div>
-              </a>
+              
               <a href="https://step.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', marginBottom:10 }}>
                 <div style={{ display:'flex', alignItems:'center', gap:12, background:'#F7F7F5', borderRadius:14, padding:14, border:'1px solid #EBEBEB' }}>
                   <div style={{ width:44, height:44, borderRadius:10, background:'#4F46E5', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, color:'#fff', flexShrink:0 }}>ST</div>
