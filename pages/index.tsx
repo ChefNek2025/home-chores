@@ -90,6 +90,16 @@ function InstallTutorial() {
 }
 
 export default function LandingPage()  {
+  const router = useRouter();
+  useEffect(() => {
+    const savedEmail = (() => { try { return localStorage.getItem('seru_email') || sessionStorage.getItem('seru_email'); } catch { return null; } })();
+    const savedPassword = (() => { try { return localStorage.getItem('seru_password') || sessionStorage.getItem('seru_password'); } catch { return null; } })();
+    if (savedEmail && savedPassword) {
+      supabase.auth.signInWithPassword({ email: savedEmail, password: savedPassword }).then(({ data, error }) => {
+        if (data?.session && !error) router.replace('/dashboard');
+      });
+    }
+  }, []);
   return (
     <div style={{ fontFamily:"'Plus Jakarta Sans','Inter',system-ui,sans-serif", background:'#FAFAF8', color:'#1A1A1A' }}>
       <style>{`
