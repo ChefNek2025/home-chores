@@ -7,7 +7,15 @@ export default function LoginPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) router.replace('/dashboard');
+      if (session) { router.replace('/dashboard'); return; }
+      // Try auto-login with saved credentials
+      const savedEmail = (() => { try { return localStorage.getItem('seru_email') || sessionStorage.getItem('seru_email'); } catch { return null; } })();
+      const savedPassword = (() => { try { return localStorage.getItem('seru_password') || sessionStorage.getItem('seru_password'); } catch { return null; } })();
+      if (savedEmail && savedPassword) {
+        supabase.auth.signInWithPassword({ email: savedEmail, password: savedPassword }).then(({ data, error }) => {
+          if (data?.session && !error) router.replace('/dashboard');
+        });
+      }
     });
   }, []);
   const [isSignup, setIsSignup] = useState(false);
@@ -19,6 +27,11 @@ export default function LoginPage() {
   const [message, setMessage] = useState('');
 
   async function handleSubmit() {
+    // Save credentials for auto-login
+    try { localStorage.setItem('seru_email', email); } catch {}
+    try { localStorage.setItem('seru_password', password); } catch {}
+    try { sessionStorage.setItem('seru_email', email); } catch {}
+    try { sessionStorage.setItem('seru_password', password); } catch {}
     setLoading(true);
     setError('');
     setMessage('');
