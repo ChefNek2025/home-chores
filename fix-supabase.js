@@ -1,4 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
+const fs = require('fs');
+
+const newLib = `import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
@@ -9,7 +11,7 @@ function getStorage() {
       try { const v = localStorage.getItem(key); if (v) return v; } catch {}
       try { const v = sessionStorage.getItem(key); if (v) return v; } catch {}
       try {
-        const match = document.cookie.match('(^|;)\s*' + key + '=([^;]+)');
+        const match = document.cookie.match('(^|;)\\s*' + key + '=([^;]+)');
         if (match) return decodeURIComponent(match[2]);
       } catch {}
       return store[key] ?? null;
@@ -38,3 +40,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     storage: getStorage(),
   },
 });
+`;
+
+fs.writeFileSync('lib/supabase.ts', newLib);
+console.log('done! size:', newLib.length);
