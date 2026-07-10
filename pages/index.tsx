@@ -269,7 +269,7 @@ export default function LandingPage()  {
           Seru Chores was created by an Ethiopian family in Virginia to help parents everywhere teach their kids responsibility, hard work, and the value of money — just like our parents taught us.
         </p>
         <p style={{fontSize:15, color:'#8B949E', lineHeight:1.7, marginBottom:24}}>
-          Whether you speak Amharic, Arabic, English, or Spanish — every family deserves a simple way to manage chores and pay their kids fairly.
+          Built for Ethiopian families and every family worldwide. Simple, fair, and works on any phone! 🌍🇪🇹
         </p>
         <div style={{display:'flex', gap:12, flexWrap:'wrap' as any}}>
           {['🇪🇹 Ethiopian families','🇺🇸 American families','🇸🇦 Arab families','🌍 Families worldwide'].map(t => (
@@ -399,8 +399,8 @@ export default function LandingPage()  {
           {q:'Do my kids need to download an app?',a:'Nope. Seru Chores is a regular website. Kids open their link in Safari or Chrome, tap "Add to Home Screen," and it looks just like a real app — no App Store needed.'},
           {q:"Is my family's data private?",a:'All data is stored directly on your device — nothing is sent to a server. Your family\'s chore history stays on your phone, not ours.'},
           {q:'Can I change the chores or pay rates?',a:'Any time. Head to the Admin dashboard → Manage tab. Add, remove, or update chores whenever you want.'},
-          {q:'What age is this good for?',a:'Best for kids ages 8–17 who are old enough to use a phone.'},
-          {q:'Can I use this for more than 2 kids?',a:'The free version supports up to 4 kids. The Business plan supports unlimited family members.'},
+          {q:'What age is this good for?',a:'Best for kids ages 6–17. Any kid old enough to do chores can use it!'},
+          {q:'Can I use this for more than 2 kids?',a:'One $4.99/month plan supports unlimited kids for your whole family! No limits.'},
         ].map(f=>(
           <div key={f.q} className="faq-item">
             <div style={{fontWeight:700,fontSize:16,color:'#1A1A1A',marginBottom:8}}>🙋 {f.q}</div>
