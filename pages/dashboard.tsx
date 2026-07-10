@@ -158,6 +158,11 @@ export default function Dashboard() {
   }
 
   async function logout() {
+    try { localStorage.setItem('seru_logged_out', 'true'); } catch {}
+    try { localStorage.removeItem('seru_email'); } catch {}
+    try { localStorage.removeItem('seru_password'); } catch {}
+    try { sessionStorage.removeItem('seru_email'); } catch {}
+    try { sessionStorage.removeItem('seru_password'); } catch {}
     await supabase.auth.signOut();
     router.push('/login');
   }

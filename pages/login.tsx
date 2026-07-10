@@ -6,9 +6,13 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const justLoggedOut = (() => { try { return localStorage.getItem('seru_logged_out') === 'true'; } catch { return false; } })();
+    if (justLoggedOut) {
+      try { localStorage.removeItem('seru_logged_out'); } catch {}
+      return;
+    }
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) { router.replace('/dashboard'); return; }
-      // Try auto-login with saved credentials
       const savedEmail = (() => { try { return localStorage.getItem('seru_email') || sessionStorage.getItem('seru_email'); } catch { return null; } })();
       const savedPassword = (() => { try { return localStorage.getItem('seru_password') || sessionStorage.getItem('seru_password'); } catch { return null; } })();
       if (savedEmail && savedPassword) {
