@@ -1,4 +1,10 @@
-import type { AppProps } from 'next/app';
+const fs = require('fs');
+
+// Fix _app.tsx to add dark mode provider
+let app = fs.readFileSync('pages/_app.tsx', 'utf8');
+console.log('current _app.tsx:', app);
+
+const newApp = `import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -22,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <style>{
-        `
+        \`
         :root {
           --bg: #FAFAF8;
           --bg2: #F7F7F5;
@@ -58,7 +64,7 @@ export default function App({ Component, pageProps }: AppProps) {
           color: var(--text) !important;
           transition: background 0.3s, color 0.3s;
         }
-        `
+        \`
       }</style>
       <div style={{ position:'fixed', bottom:20, right:20, zIndex:9999 }}>
         <button
@@ -86,3 +92,7 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+`;
+
+fs.writeFileSync('pages/_app.tsx', newApp);
+console.log('done! dark mode added!');
