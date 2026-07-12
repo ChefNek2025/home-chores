@@ -200,6 +200,7 @@ export default function Dashboard() {
           {id:'leaderboard', label:'🏆 Leaderboard'},
           {id:'photos', label:'📸 Photos'},
           {id:'paykids', label:'💳 Pay Kids'},
+          {id:'payhistory', label:'📊 Pay History'},
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             style={{ padding:'14px 16px', fontSize:14, fontWeight:500, border:'none', background:'none', cursor:'pointer', borderBottom: tab===t.id ? '2px solid #1D9E75' : '2px solid transparent', color: tab===t.id ? '#1D9E75' : '#666', whiteSpace:'nowrap' as any }}>
@@ -484,7 +485,105 @@ export default function Dashboard() {
                     </div>
                     </div>
                   <div style={{ display:'flex', gap:8, marginTop:10 }}>
-                    <button onClick={() => alert('Pay ' + kid.name)} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>💸 Pay</button>
+                    <button onClick={async () => { await supabase.from('payments').insert({ family_id: family?.id, kid_id: kid.id, kid_name: kid.name, amount: we, paid_at: new Date().toISOString() }); alert('✅ Paid ' + kid.name + '  style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>💸 Pay</button>
+                    <button onClick={() => { if(window.confirm('Reset ' + kid.name + ' earnings for next week?')) { alert(kid.name + ' earnings reset! ✅ New week started!'); } }} style={{ flex:1, background:'#F7F7F5', color:'#333', border:'1px solid #E0E0E0', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>🔄 Reset</button>
+                  </div>
+                </div>
+                );
+              })}
+              {kids.length === 0 && (
+                <div style={{ background:surface, borderRadius:20, padding:32, textAlign:'center', border:`1px solid ${border}`, color:text3 }}>
+                  <div style={{ fontSize:40, marginBottom:12 }}>👧</div>
+                  <p>Add kids first to track earnings!</p>
+                  <button onClick={() => setTab('kids')} style={{ marginTop:16, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontWeight:700, cursor:'pointer' }}>Add kids →</button>
+                </div>
+              )}
+            </div>
+            <div style={{ background:surface, borderRadius:20, padding:24, border:`1px solid ${border}`, marginBottom:16 }}>
+              <h3 style={{ fontSize:14, fontWeight:700, color:text, marginBottom:4 }}>🏆 Give kids a real debit card</h3>
+              <p style={{ fontSize:12, color:'#aaa', marginBottom:16 }}>Kids get a real Visa debit card. You control every purchase. See spending in real time!</p>
+              
+              <a href="https://step.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', marginBottom:10 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:12, background:bg2, borderRadius:14, padding:14, border:`1px solid ${border}` }}>
+                  <div style={{ width:44, height:44, borderRadius:10, background:'#4F46E5', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, color:'#fff', flexShrink:0 }}>ST</div>
+                  <div style={{ flex:1 }}>
+                    <div style={{ fontWeight:700, color:text }}>Step <span style={{ background:'#E1F5EE', color:'#0F6E56', fontSize:10, padding:'2px 8px', borderRadius:99, marginLeft:6 }}>FREE</span></div>
+                    <div style={{ fontSize:12, color:text2 }}>Free Visa card · Ages 13-18 · Builds credit history</div>
+                  </div>
+                  <div style={{ fontSize:13, color:'#4F46E5', fontWeight:700 }}>Get started →</div>
+                </div>
+              </a>
+              <a href="https://current.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:12, background:bg2, borderRadius:14, padding:14, border:`1px solid ${border}` }}>
+                  <div style={{ width:44, height:44, borderRadius:10, background:'#000', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, color:'#fff', flexShrink:0 }}>CU</div>
+                  <div style={{ flex:1 }}>
+                    <div style={{ fontWeight:700, color:text }}>Current <span style={{ background:'#E1F5EE', color:'#0F6E56', fontSize:10, padding:'2px 8px', borderRadius:99, marginLeft:6 }}>FREE</span></div>
+                    <div style={{ fontSize:12, color:text2 }}>Free Visa card · Ages 13-18 · Spend controls by category</div>
+                  </div>
+                  <div style={{ fontSize:13, color:'#333', fontWeight:700 }}>Get started →</div>
+                </div>
+              </a>
+            </div>
+            <div style={{ background:surface, borderRadius:20, padding:24, border:`1px solid ${border}` }}>
+              <h3 style={{ fontSize:14, fontWeight:700, color:text, marginBottom:4 }}>💸 Pay manually</h3>
+              <p style={{ fontSize:12, color:'#aaa', marginBottom:16 }}>Transfer money directly using your preferred app</p>
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:10 }}>
+                {[{name:'Venmo',color:'#008CFF',url:'https://venmo.com'},{name:'Zelle',color:'#6D1ED4',url:'https://zellepay.com'},{name:'Cash App',color:'#00C244',url:'https://cash.app'}].map(app => (
+                  <a key={app.name} href={app.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none' }}>
+                    <div style={{ background:bg2, borderRadius:12, padding:'14px 8px', textAlign:'center', border:`1px solid ${border}` }}>
+                      <div style={{ width:32, height:32, borderRadius:8, background:app.color, margin:'0 auto 6px', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:900, color:'#fff' }}>{app.name[0]}</div>
+                      <div style={{ fontSize:12, fontWeight:600, color:'#333' }}>{app.name}</div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+function AIReport({ familyId }: { familyId: string }) {
+  const [report, setReport] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function generateReport() {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/weekly-report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ familyId }) });
+      const data = await res.json();
+      if (data.report) setReport(data.report);
+      else setReport('Could not generate report. Please try again.');
+    } catch(e) { setReport('Error generating report.'); }
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ background:'linear-gradient(135deg,#0D1117,#1a2332)', borderRadius:20, padding:24, border:'1px solid #1D9E75' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:16 }}>
+        <div style={{ fontSize:32 }}>🤖</div>
+        <div>
+          <div style={{ fontWeight:800, fontSize:16, color:'#fff' }}>AI Weekly Report</div>
+          <div style={{ fontSize:13, color:text2 }}>Powered by Claude AI</div>
+        </div>
+      </div>
+      {report ? (
+        <div style={{ background:'rgba(255,255,255,0.05)', borderRadius:14, padding:20, marginBottom:16 }}>
+          <p style={{ color:'#C9D1D9', fontSize:14, lineHeight:1.8, whiteSpace:'pre-wrap' as any }}>{report}</p>
+        </div>
+      ) : (
+        <p style={{ color:text2, fontSize:14, marginBottom:16, lineHeight:1.6 }}>Generate a personalized AI report about your family's chore progress, earnings, and achievements this week!</p>
+      )}
+      <button onClick={generateReport} disabled={loading} style={{ width:'100%', background: loading ? '#333' : '#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'12px', fontSize:14, fontWeight:700, cursor: loading ? 'default' : 'pointer' }}>
+        {loading ? '🤖 Generating report...' : '✨ Generate AI Report'}
+      </button>
+    </div>
+  );
+}
+ + we.toFixed(2) + '! Check Pay History tab!'); }} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>💸 Pay</button>
                     <button onClick={() => alert('Reset ' + kid.name)} style={{ flex:1, background:'#F7F7F5', color:'#333', border:'1px solid #E0E0E0', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>🔄 Reset</button>
                   </div>
                 </div>
