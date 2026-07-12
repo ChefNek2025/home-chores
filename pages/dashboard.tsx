@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase';
 
 export default function Dashboard() {
   const router = useRouter();
-  const { dark, bg, bg2, surface, border, text, text2, text3, cardBg, headerBg, inputBg, inputBorder } = useDark();
+  const { dark, bg, bg2, surface, border, text, text2, text3 } = useDark();
   const [family, setFamily] = useState<any>(null);
   const [kids, setKids] = useState<any[]>([]);
   const [chores, setChores] = useState<any[]>([]);
@@ -471,7 +471,8 @@ export default function Dashboard() {
                 const kc = chores.filter(c => c.assign_to === 'both' || c.assign_to === kid.id);
                 const we = kc.reduce((a,c) => a + Number(c.pay_per_completion), 0);
                 return (
-                  <div key={kid.id} style={{ background:surface, borderRadius:20, padding:20, border:`1px solid ${border}`, display:'flex', alignItems:'center', gap:16 }}>
+                  <div key={kid.id} style={{ background:surface, borderRadius:20, padding:20, border:`1px solid ${border}` }}>
+                    <div style={{ display:'flex', alignItems:'center', gap:16, marginBottom:10 }}>
                     <div style={{ width:48, height:48, borderRadius:14, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:20, color:'#0F6E56' }}>{kid.name[0]}</div>
                     <div style={{ flex:1 }}>
                       <div style={{ fontWeight:700, fontSize:16, color:text }}>{kid.name}</div>
@@ -479,9 +480,14 @@ export default function Dashboard() {
                     </div>
                     <div style={{ textAlign:'right' }}>
                       <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>${we.toFixed(2)}</div>
-                      <div style={{ fontSize:11, color:text3 }}>per day potential</div>
+                      <div style={{ fontSize:11, color:text3 }}>earned this week</div>
                     </div>
+                    </div>
+                  <div style={{ display:'flex', gap:8, marginTop:10 }}>
+                    <button onClick={() => alert('Pay ' + kid.name)} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>💸 Pay</button>
+                    <button onClick={() => alert('Reset ' + kid.name)} style={{ flex:1, background:'#F7F7F5', color:'#333', border:'1px solid #E0E0E0', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>🔄 Reset</button>
                   </div>
+                </div>
                 );
               })}
               {kids.length === 0 && (
