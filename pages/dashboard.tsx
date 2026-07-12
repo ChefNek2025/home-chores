@@ -488,9 +488,160 @@ export default function Dashboard() {
                     </div>
                     <div style={{ textAlign:'right' }}>
                       <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>${we.toFixed(2)}</div>
-                      <div style={{ fontSize:11, color:text3 }}>per day potential</div>
+                      <div style={{ fontSize:11, color:text3 }}>earned this week</div>
                     </div>
                   </div>
+                  <div style={{ display:'flex', gap:8, marginTop:12 }}>
+                    <button onClick={async () => {
+                      await supabase.from('payments').insert({ family_id: family?.id, kid_id: kid.id, kid_name: kid.name, amount: we, paid_at: new Date().toISOString() });
+                      alert('✅ Paid ' + kid.name + ' 
+              {kids.length === 0 && (
+                <div style={{ background:surface, borderRadius:20, padding:32, textAlign:'center', border:`1px solid ${border}`, color:text3 }}>
+                  <div style={{ fontSize:40, marginBottom:12 }}>👧</div>
+                  <p>Add kids first to track earnings!</p>
+                  <button onClick={() => setTab('kids')} style={{ marginTop:16, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontWeight:700, cursor:'pointer' }}>Add kids →</button>
+                </div>
+              )}
+            </div>
+            <div style={{ background:surface, borderRadius:20, padding:24, border:`1px solid ${border}`, marginBottom:16 }}>
+              <h3 style={{ fontSize:14, fontWeight:700, color:text, marginBottom:4 }}>🏆 Give kids a real debit card</h3>
+              <p style={{ fontSize:12, color:'#aaa', marginBottom:16 }}>Kids get a real Visa debit card. You control every purchase. See spending in real time!</p>
+              
+              <a href="https://step.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', marginBottom:10 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:12, background:bg2, borderRadius:14, padding:14, border:`1px solid ${border}` }}>
+                  <div style={{ width:44, height:44, borderRadius:10, background:'#4F46E5', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, color:'#fff', flexShrink:0 }}>ST</div>
+                  <div style={{ flex:1 }}>
+                    <div style={{ fontWeight:700, color:text }}>Step <span style={{ background:'#E1F5EE', color:'#0F6E56', fontSize:10, padding:'2px 8px', borderRadius:99, marginLeft:6 }}>FREE</span></div>
+                    <div style={{ fontSize:12, color:text2 }}>Free Visa card · Ages 13-18 · Builds credit history</div>
+                  </div>
+                  <div style={{ fontSize:13, color:'#4F46E5', fontWeight:700 }}>Get started →</div>
+                </div>
+              </a>
+              <a href="https://current.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:12, background:bg2, borderRadius:14, padding:14, border:`1px solid ${border}` }}>
+                  <div style={{ width:44, height:44, borderRadius:10, background:'#000', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, color:'#fff', flexShrink:0 }}>CU</div>
+                  <div style={{ flex:1 }}>
+                    <div style={{ fontWeight:700, color:text }}>Current <span style={{ background:'#E1F5EE', color:'#0F6E56', fontSize:10, padding:'2px 8px', borderRadius:99, marginLeft:6 }}>FREE</span></div>
+                    <div style={{ fontSize:12, color:text2 }}>Free Visa card · Ages 13-18 · Spend controls by category</div>
+                  </div>
+                  <div style={{ fontSize:13, color:'#333', fontWeight:700 }}>Get started →</div>
+                </div>
+              </a>
+            </div>
+            <div style={{ background:surface, borderRadius:20, padding:24, border:`1px solid ${border}` }}>
+              <h3 style={{ fontSize:14, fontWeight:700, color:text, marginBottom:4 }}>💸 Pay manually</h3>
+              <p style={{ fontSize:12, color:'#aaa', marginBottom:16 }}>Transfer money directly using your preferred app</p>
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:10 }}>
+                {[{name:'Venmo',color:'#008CFF',url:'https://venmo.com'},{name:'Zelle',color:'#6D1ED4',url:'https://zellepay.com'},{name:'Cash App',color:'#00C244',url:'https://cash.app'}].map(app => (
+                  <a key={app.name} href={app.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none' }}>
+                    <div style={{ background:bg2, borderRadius:12, padding:'14px 8px', textAlign:'center', border:`1px solid ${border}` }}>
+                      <div style={{ width:32, height:32, borderRadius:8, background:app.color, margin:'0 auto 6px', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:900, color:'#fff' }}>{app.name[0]}</div>
+                      <div style={{ fontSize:12, fontWeight:600, color:'#333' }}>{app.name}</div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+
+function PaymentHistory({ familyId, supabase, text, text2, text3, surface, border }: any) {
+  const [payments, setPayments] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (!familyId) return;
+    supabase.from('payments').select('*').eq('family_id', familyId).order('paid_at', { ascending: false }).then(({ data }: any) => {
+      setPayments(data || []);
+      setLoading(false);
+    });
+  }, [familyId]);
+
+  if (loading) return <div style={{ textAlign:'center', color:text3, padding:32 }}>Loading...</div>;
+
+  if (payments.length === 0) return (
+    <div style={{ background:surface, borderRadius:20, padding:32, textAlign:'center', border:`1px solid ${border}` }}>
+      <div style={{ fontSize:40, marginBottom:12 }}>💸</div>
+      <p style={{ color:text3 }}>No payments yet! Pay your kids from the Pay Kids tab.</p>
+    </div>
+  );
+
+  const total = payments.reduce((a: number, p: any) => a + Number(p.amount), 0);
+
+  return (
+    <div>
+      <div style={{ background:'#1D9E75', borderRadius:20, padding:20, marginBottom:16, textAlign:'center' }}>
+        <div style={{ fontSize:13, color:'#9FE1CB', fontWeight:700, marginBottom:4 }}>TOTAL PAID TO KIDS</div>
+        <div style={{ fontSize:36, fontWeight:900, color:'#fff' }}>${total.toFixed(2)}</div>
+      </div>
+      <div style={{ display:'grid', gap:10 }}>
+        {payments.map((p: any, i: number) => (
+          <div key={i} style={{ background:surface, borderRadius:16, padding:'14px 18px', border:`1px solid ${border}`, display:'flex', alignItems:'center', gap:12 }}>
+            <div style={{ width:40, height:40, borderRadius:12, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:16, color:'#0F6E56' }}>{p.kid_name?.[0] || '?'}</div>
+            <div style={{ flex:1 }}>
+              <div style={{ fontWeight:700, color:text }}>{p.kid_name}</div>
+              <div style={{ fontSize:12, color:text3 }}>{new Date(p.paid_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}</div>
+            </div>
+            <div style={{ fontSize:20, fontWeight:800, color:'#1D9E75' }}>${Number(p.amount).toFixed(2)}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AIReport({ familyId }: { familyId: string }) {
+  const [report, setReport] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function generateReport() {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/weekly-report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ familyId }) });
+      const data = await res.json();
+      if (data.report) setReport(data.report);
+      else setReport('Could not generate report. Please try again.');
+    } catch(e) { setReport('Error generating report.'); }
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ background:'linear-gradient(135deg,#0D1117,#1a2332)', borderRadius:20, padding:24, border:'1px solid #1D9E75' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:16 }}>
+        <div style={{ fontSize:32 }}>🤖</div>
+        <div>
+          <div style={{ fontWeight:800, fontSize:16, color:'#fff' }}>AI Weekly Report</div>
+          <div style={{ fontSize:13, color:text2 }}>Powered by Claude AI</div>
+        </div>
+      </div>
+      {report ? (
+        <div style={{ background:'rgba(255,255,255,0.05)', borderRadius:14, padding:20, marginBottom:16 }}>
+          <p style={{ color:'#C9D1D9', fontSize:14, lineHeight:1.8, whiteSpace:'pre-wrap' as any }}>{report}</p>
+        </div>
+      ) : (
+        <p style={{ color:text2, fontSize:14, marginBottom:16, lineHeight:1.6 }}>Generate a personalized AI report about your family's chore progress, earnings, and achievements this week!</p>
+      )}
+      <button onClick={generateReport} disabled={loading} style={{ width:'100%', background: loading ? '#333' : '#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'12px', fontSize:14, fontWeight:700, cursor: loading ? 'default' : 'pointer' }}>
+        {loading ? '🤖 Generating report...' : '✨ Generate AI Report'}
+      </button>
+    </div>
+  );
+}
+ + we.toFixed(2) + '! Great job!');
+                    }} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>
+                      💸 Pay {we.toFixed(2){'}'}
+                    </button>
+                    <button onClick={() => { if(window.confirm('Reset ' + kid.name + ' earnings for next week?')) alert(kid.name + ' reset! ✅'); }} style={{ flex:1, background:'#F7F7F5', color:'#333', border:'1px solid #E0E0E0', borderRadius:12, padding:'10px', fontSize:13, fontWeight:700, cursor:'pointer' }}>
+                      🔄 Reset Week
+                    </button>
+                  </div>
+                </div>
                 );
               })}
               {kids.length === 0 && (
