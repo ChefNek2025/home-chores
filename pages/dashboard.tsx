@@ -479,7 +479,7 @@ export default function Dashboard() {
                     </div>
                     <div style={{ textAlign:'right' }}>
                       <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>${we.toFixed(2)}</div>
-                      <div style={{ fontSize:11, color:text3 }}>per day potential</div>
+                      <div style={{ fontSize:11, color:text3 }}>earned this week</div>
                     </div>
                   </div>
                 );
