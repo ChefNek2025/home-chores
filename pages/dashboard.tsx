@@ -641,7 +641,6 @@ function AIReport({ familyId }: { familyId: string }) {
                       🔄 Reset Week
                     </button>
                   </div>
-                </div>
                 );
               })}
               {kids.length === 0 && (
