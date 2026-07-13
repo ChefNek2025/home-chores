@@ -545,6 +545,7 @@ export default function Dashboard() {
           <div>
             <h2 style={{ fontSize:20, fontWeight:800, color:text, marginBottom:4 }}>📊 Payment History</h2>
             <p style={{ fontSize:13, color:text3, marginBottom:20 }}>All payments made to your kids!</p>
+            <PayHistory supabase={supabase} familyId={family?.id} surface={surface} border={border} text={text} text3={text3} />
           </div>
         )}
 
