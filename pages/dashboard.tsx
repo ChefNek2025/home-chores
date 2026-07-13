@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [chores, setChores] = useState<any[]>([]);
   const [photos, setPhotos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [paidKids, setPaidKids] = useState<string[]>([]);
+  const [paidKids, setPaidKids] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem('seru_paid_kids') || '[]'); } catch { return []; } });
   const [tab, setTab] = useState('overview');
   const [newKidName, setNewKidName] = useState('');
   const [newKidAge, setNewKidAge] = useState('');
@@ -483,7 +483,7 @@ export default function Dashboard() {
                     <div style={{ textAlign:'right' }}>
                       <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>${we.toFixed(2)}</div>
                       <div style={{ fontSize:11, color:text3 }}>earned this week</div><div style={{marginTop:10,display:"flex",gap:8}}><button onClick={()=>supabase.from("payments").insert({family_id:family?.id,kid_id:kid.id,kid_name:kid.name,amount:we,paid_at:new Date().toISOString()}).then(({error})=>{ if(error) alert("Error: "+error.message); else { 
-    setPaidKids(prev=>[...prev,kid.id]); 
+    setPaidKids(prev=>{ const next=[...prev,kid.id]; try{localStorage.setItem('seru_paid_kids',JSON.stringify(next));}catch{} return next; }); 
     const choice = window.confirm("✅ Paid " + kid.name + " $" + we.toFixed(2) + " recorded!\n\nDo you want to transfer the money now?\n\nOK = Open Step\nCancel = I will pay later");
     if(choice) window.open("https://step.com", "_blank");
   } })} style={{flex:1,background:"#1D9E75",color:"#fff",border:"none",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>💸 Pay</button><button onClick={()=>window.confirm("Reset "+kid.name+" earnings?")&&alert(kid.name+" reset! New week started!")} style={{flex:1,background:"#F7F7F5",color:"#333",border:"1px solid #E0E0E0",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>🔄 Reset</button></div>
