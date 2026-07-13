@@ -581,7 +581,10 @@ function PayHistory({ supabase, familyId, surface, border, text, text3 }: any) {
     <div>
       <div style={{ background:'#1D9E75', borderRadius:20, padding:20, marginBottom:16, textAlign:'center' }}>
         <div style={{ fontSize:13, color:'#9FE1CB', fontWeight:700, marginBottom:4 }}>TOTAL PAID TO KIDS</div>
-        <div style={{ fontSize:36, fontWeight:900, color:'#fff' }}>${total.toFixed(2)}</div>
+            <div style={{ fontSize:36, fontWeight:900, color:'#fff' }}>${total.toFixed(2)}</div>
+          </div>
+          <button onClick={async()=>{ if(window.confirm('Clear all payment history?')){ await supabase.from('payments').delete().eq('family_id',familyId); setPayments([]); alert('Cleared!'); }}} style={{ background:'rgba(255,255,255,0.2)', color:'#fff', border:'1px solid rgba(255,255,255,0.4)', borderRadius:10, padding:'8px 14px', fontSize:12, fontWeight:700, cursor:'pointer' }}>🗑️ Clear</button>
+        </div>
       </div>
       <div style={{ display:'grid', gap:10 }}>
         {payments.map((p: any, i: number) => (
