@@ -558,7 +558,7 @@ function PayHistory({ supabase, familyId, surface, border, text, text3 }: any) {
   const [payments, setPayments] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!familyId) return;
     supabase.from('payments').select('*').eq('family_id', familyId).order('created_at', { ascending: false }).then(({ data }: any) => {
       setPayments(data || []);
