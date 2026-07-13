@@ -470,7 +470,8 @@ export default function Dashboard() {
             <div style={{ display:'grid', gap:12, marginBottom:24 }}>
               {kids.map(kid => {
                 const kc = chores.filter(c => c.assign_to === 'both' || c.assign_to === kid.id);
-                const we = kc.reduce((a,c) => a + Number(c.pay_per_completion), 0);
+                const weRaw = kc.reduce((a,c) => a + Number(c.pay_per_completion), 0);
+                const we = paidKids.includes(kid.id) ? 0 : weRaw;
                 return (
                   <div key={kid.id} style={{ background:surface, borderRadius:20, padding:20, border:`1px solid ${border}`, display:'flex', alignItems:'center', gap:16 }}>
                     <div style={{ width:48, height:48, borderRadius:14, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:20, color:'#0F6E56' }}>{kid.name[0]}</div>
@@ -480,7 +481,7 @@ export default function Dashboard() {
                     </div>
                     <div style={{ textAlign:'right' }}>
                       <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>${we.toFixed(2)}</div>
-                      <div style={{ fontSize:11, color:text3 }}>earned this week</div><div style={{marginTop:10,display:"flex",gap:8}}><button onClick={()=>supabase.from("payments").insert({family_id:family?.id,kid_id:kid.id,kid_name:kid.name,amount:we,paid_at:new Date().toISOString()}).then(({error})=>{ if(error) alert("Error: "+error.message); else alert("Paid "+kid.name+"!"); })} style={{flex:1,background:"#1D9E75",color:"#fff",border:"none",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>💸 Pay</button><button onClick={()=>window.confirm("Reset "+kid.name+" earnings?")&&alert(kid.name+" reset! New week started!")} style={{flex:1,background:"#F7F7F5",color:"#333",border:"1px solid #E0E0E0",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>🔄 Reset</button></div>
+                      <div style={{ fontSize:11, color:text3 }}>earned this week</div><div style={{marginTop:10,display:"flex",gap:8}}><button onClick={()=>supabase.from("payments").insert({family_id:family?.id,kid_id:kid.id,kid_name:kid.name,amount:we,paid_at:new Date().toISOString()}).then(({error})=>{ if(error) alert("Error: "+error.message); else { alert("Paid "+kid.name+"! ✅"); setPaidKids(prev=>[...prev,kid.id]); } })} style={{flex:1,background:"#1D9E75",color:"#fff",border:"none",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>💸 Pay</button><button onClick={()=>window.confirm("Reset "+kid.name+" earnings?")&&alert(kid.name+" reset! New week started!")} style={{flex:1,background:"#F7F7F5",color:"#333",border:"1px solid #E0E0E0",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>🔄 Reset</button></div>
                     </div>
                   </div>
                 );
