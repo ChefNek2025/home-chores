@@ -553,6 +553,51 @@ export default function Dashboard() {
   );
 }
 
+function PayHistory({ supabase, familyId, surface, border, text, text3 }: any) {
+  const [payments, setPayments] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (!familyId) return;
+    supabase.from('payments').select('*').eq('family_id', familyId).order('created_at', { ascending: false }).then(({ data }: any) => {
+      setPayments(data || []);
+      setLoading(false);
+    });
+  }, [familyId]);
+
+  if (loading) return <div style={{ textAlign:'center', padding:32, color:text3 }}>Loading...</div>;
+
+  if (payments.length === 0) return (
+    <div style={{ background:surface, borderRadius:20, padding:32, textAlign:'center', border:`1px solid ${border}` }}>
+      <div style={{ fontSize:40, marginBottom:12 }}>💸</div>
+      <p style={{ color:text3 }}>No payments yet! Use the Pay Kids tab to pay your kids.</p>
+    </div>
+  );
+
+  const total = payments.reduce((a: number, p: any) => a + Number(p.amount), 0);
+
+  return (
+    <div>
+      <div style={{ background:'#1D9E75', borderRadius:20, padding:20, marginBottom:16, textAlign:'center' }}>
+        <div style={{ fontSize:13, color:'#9FE1CB', fontWeight:700, marginBottom:4 }}>TOTAL PAID TO KIDS</div>
+        <div style={{ fontSize:36, fontWeight:900, color:'#fff' }}>${total.toFixed(2)}</div>
+      </div>
+      <div style={{ display:'grid', gap:10 }}>
+        {payments.map((p: any, i: number) => (
+          <div key={i} style={{ background:surface, borderRadius:16, padding:'14px 18px', border:`1px solid ${border}`, display:'flex', alignItems:'center', gap:12 }}>
+            <div style={{ width:40, height:40, borderRadius:12, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:16, color:'#0F6E56' }}>{p.kid_name?.[0] || '?'}</div>
+            <div style={{ flex:1 }}>
+              <div style={{ fontWeight:700, color:text }}>{p.kid_name || 'Kid'}</div>
+              <div style={{ fontSize:12, color:text3 }}>{new Date(p.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}</div>
+            </div>
+            <div style={{ fontSize:20, fontWeight:800, color:'#1D9E75' }}>${Number(p.amount).toFixed(2)}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function AIReport({ familyId }: { familyId: string }) {
   const [report, setReport] = useState('');
   const [loading, setLoading] = useState(false);
