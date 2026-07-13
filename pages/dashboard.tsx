@@ -200,6 +200,7 @@ export default function Dashboard() {
           {id:'leaderboard', label:'🏆 Leaderboard'},
           {id:'photos', label:'📸 Photos'},
           {id:'paykids', label:'💳 Pay Kids'},
+          {id:'payhistory', label:'📊 Pay History'},
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             style={{ padding:'14px 16px', fontSize:14, fontWeight:500, border:'none', background:'none', cursor:'pointer', borderBottom: tab===t.id ? '2px solid #1D9E75' : '2px solid transparent', color: tab===t.id ? '#1D9E75' : '#666', whiteSpace:'nowrap' as any }}>
@@ -531,6 +532,13 @@ export default function Dashboard() {
                 ))}
               </div>
             </div>
+          </div>
+        )}
+
+      {tab === 'payhistory' && (
+          <div>
+            <h2 style={{ fontSize:20, fontWeight:800, color:text, marginBottom:4 }}>📊 Payment History</h2>
+            <p style={{ fontSize:13, color:text3, marginBottom:20 }}>All payments made to your kids!</p>
           </div>
         )}
 
