@@ -11,6 +11,7 @@ export default function Dashboard() {
   const [chores, setChores] = useState<any[]>([]);
   const [photos, setPhotos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [paidKids, setPaidKids] = useState<string[]>([]);
   const [tab, setTab] = useState('overview');
   const [newKidName, setNewKidName] = useState('');
   const [newKidAge, setNewKidAge] = useState('');
