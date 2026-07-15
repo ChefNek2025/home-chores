@@ -626,7 +626,7 @@ function AIReport({ familyId }: { familyId: string }) {
         <div style={{ fontSize:32 }}>🤖</div>
         <div>
           <div style={{ fontWeight:800, fontSize:16, color:'#fff' }}>AI Weekly Report</div>
-          <div style={{ fontSize:13, color:text2 }}>Powered by Claude AI</div>
+          <div style={{ fontSize:13, color:text3 }}>Powered by Claude AI</div>
         </div>
       </div>
       {report ? (
@@ -634,7 +634,7 @@ function AIReport({ familyId }: { familyId: string }) {
           <p style={{ color:'#C9D1D9', fontSize:14, lineHeight:1.8, whiteSpace:'pre-wrap' as any }}>{report}</p>
         </div>
       ) : (
-        <p style={{ color:text2, fontSize:14, marginBottom:16, lineHeight:1.6 }}>Generate a personalized AI report about your family's chore progress, earnings, and achievements this week!</p>
+        <p style={{ color:text3, fontSize:14, marginBottom:16, lineHeight:1.6 }}>Generate a personalized AI report about your family's chore progress, earnings, and achievements this week!</p>
       )}
       <button onClick={generateReport} disabled={loading} style={{ width:'100%', background: loading ? '#333' : '#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'12px', fontSize:14, fontWeight:700, cursor: loading ? 'default' : 'pointer' }}>
         {loading ? '🤖 Generating report...' : '✨ Generate AI Report'}
