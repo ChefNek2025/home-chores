@@ -559,7 +559,7 @@ export default function Dashboard() {
   );
 }
 
-function PayHistory({ supabase, familyId, '#fff', '#EBEBEB', '#0D1117', '#888' }: any) {
+function PayHistory({ supabase, familyId }: any) {
   const [payments, setPayments] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
 
