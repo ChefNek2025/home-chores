@@ -559,7 +559,7 @@ export default function Dashboard() {
   );
 }
 
-function PayHistory({ supabase, familyId, surface, border, text, text3 }: any) {
+function PayHistory({ supabase, familyId, '#fff', '#EBEBEB', '#0D1117', '#888' }: any) {
   const [payments, setPayments] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -571,12 +571,12 @@ function PayHistory({ supabase, familyId, surface, border, text, text3 }: any) {
     });
   }, [familyId]);
 
-  if (loading) return <div style={{ textAlign:'center', padding:32, color:text3 }}>Loading...</div>;
+  if (loading) return <div style={{ textAlign:'center', padding:32, color:'#888' }}>Loading...</div>;
 
   if (payments.length === 0) return (
-    <div style={{ background:surface, borderRadius:20, padding:32, textAlign:'center', border:`1px solid ${border}` }}>
+    <div style={{ background:'#fff', borderRadius:20, padding:32, textAlign:'center', '#EBEBEB':`1px solid ${'#EBEBEB'}` }}>
       <div style={{ fontSize:40, marginBottom:12 }}>💸</div>
-      <p style={{ color:text3 }}>No payments yet! Use the Pay Kids tab to pay your kids.</p>
+      <p style={{ color:'#888' }}>No payments yet! Use the Pay Kids tab to pay your kids.</p>
     </div>
   );
 
@@ -587,15 +587,15 @@ function PayHistory({ supabase, familyId, surface, border, text, text3 }: any) {
       <div style={{ background:'#1D9E75', borderRadius:20, padding:20, marginBottom:16, textAlign:'center' }}>
         <div style={{ fontSize:13, color:'#9FE1CB', fontWeight:700, marginBottom:4 }}>TOTAL PAID TO KIDS</div>
         <div style={{ fontSize:36, fontWeight:900, color:'#fff' }}>${total.toFixed(2)}</div>
-        <button onClick={async()=>{ if(window.confirm('Clear all payment history?')){ await supabase.from('payments').delete().eq('family_id',familyId); setPayments([]); alert('Cleared! ✅'); }}} style={{ marginTop:12, width:'100%', background:'rgba(255,255,255,0.15)', color:'#fff', border:'1px solid rgba(255,255,255,0.3)', borderRadius:10, padding:'8px', fontSize:12, fontWeight:700, cursor:'pointer' }}>🗑️ Clear Payment History</button>
+        <button onClick={async()=>{ if(window.confirm('Clear all payment history?')){ await supabase.from('payments').delete().eq('family_id',familyId); setPayments([]); alert('Cleared! ✅'); }}} style={{ marginTop:12, width:'100%', background:'rgba(255,255,255,0.15)', color:'#fff', '#EBEBEB':'1px solid rgba(255,255,255,0.3)', borderRadius:10, padding:'8px', fontSize:12, fontWeight:700, cursor:'pointer' }}>🗑️ Clear Payment History</button>
       </div>
       <div style={{ display:'grid', gap:10 }}>
         {payments.map((p: any, i: number) => (
-          <div key={i} style={{ background:surface, borderRadius:16, padding:'14px 18px', border:`1px solid ${border}`, display:'flex', alignItems:'center', gap:12 }}>
+          <div key={i} style={{ background:'#fff', borderRadius:16, padding:'14px 18px', '#EBEBEB':`1px solid ${'#EBEBEB'}`, display:'flex', alignItems:'center', gap:12 }}>
             <div style={{ width:40, height:40, borderRadius:12, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:16, color:'#0F6E56' }}>{p.kid_name?.[0] || '?'}</div>
             <div style={{ flex:1 }}>
-              <div style={{ fontWeight:700, color:text }}>{p.kid_name || 'Kid'}</div>
-              <div style={{ fontSize:12, color:text3 }}>{new Date(p.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}</div>
+              <div style={{ fontWeight:700, color:'#0D1117' }}>{p.kid_name || 'Kid'}</div>
+              <div style={{ fontSize:12, color:'#888' }}>{new Date(p.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}</div>
             </div>
             <div style={{ fontSize:20, fontWeight:800, color:'#1D9E75' }}>${Number(p.amount).toFixed(2)}</div>
           </div>
@@ -621,12 +621,12 @@ function AIReport({ familyId }: { familyId: string }) {
   }
 
   return (
-    <div style={{ background:'linear-gradient(135deg,#0D1117,#1a2332)', borderRadius:20, padding:24, border:'1px solid #1D9E75' }}>
+    <div style={{ background:'linear-gradient(135deg,#0D1117,#1a2332)', borderRadius:20, padding:24, '#EBEBEB':'1px solid #1D9E75' }}>
       <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:16 }}>
         <div style={{ fontSize:32 }}>🤖</div>
         <div>
           <div style={{ fontWeight:800, fontSize:16, color:'#fff' }}>AI Weekly Report</div>
-          <div style={{ fontSize:13, color:text3 }}>Powered by Claude AI</div>
+          <div style={{ fontSize:13, color:'#888' }}>Powered by Claude AI</div>
         </div>
       </div>
       {report ? (
@@ -634,9 +634,9 @@ function AIReport({ familyId }: { familyId: string }) {
           <p style={{ color:'#C9D1D9', fontSize:14, lineHeight:1.8, whiteSpace:'pre-wrap' as any }}>{report}</p>
         </div>
       ) : (
-        <p style={{ color:text3, fontSize:14, marginBottom:16, lineHeight:1.6 }}>Generate a personalized AI report about your family's chore progress, earnings, and achievements this week!</p>
+        <p style={{ color:'#888', fontSize:14, marginBottom:16, lineHeight:1.6 }}>Generate a personalized AI report about your family's chore progress, earnings, and achievements this week!</p>
       )}
-      <button onClick={generateReport} disabled={loading} style={{ width:'100%', background: loading ? '#333' : '#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'12px', fontSize:14, fontWeight:700, cursor: loading ? 'default' : 'pointer' }}>
+      <button onClick={generateReport} disabled={loading} style={{ width:'100%', background: loading ? '#333' : '#1D9E75', color:'#fff', '#EBEBEB':'none', borderRadius:12, padding:'12px', fontSize:14, fontWeight:700, cursor: loading ? 'default' : 'pointer' }}>
         {loading ? '🤖 Generating report...' : '✨ Generate AI Report'}
       </button>
     </div>
