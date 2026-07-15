@@ -218,7 +218,7 @@ export default function Dashboard() {
             {kids.length === 0 ? (
               <div style={{ background:surface, borderRadius:20, padding:32, textAlign:'center', border:`1px solid ${border}` }}>
                 <div style={{ fontSize:40, marginBottom:12 }}>👧</div>
-                <p style={{ color:text2, marginBottom:16 }}>No kids added yet! Go to the Kids tab to add your children.</p>
+                <p style={{ color:text3, marginBottom:16 }}>No kids added yet! Go to the Kids tab to add your children.</p>
                 <button onClick={() => setTab('kids')} style={{ background:'#1D9E75', color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontWeight:700, cursor:'pointer' }}>Add kids →</button>
               </div>
             ) : (
