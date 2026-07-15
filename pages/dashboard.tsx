@@ -452,7 +452,17 @@ export default function Dashboard() {
                       <img src={photo.photo_url} alt="Chore proof" style={{ width:'100%', maxHeight:300, objectFit:'cover' as any, borderRadius:12, marginBottom:12 }} />
                       {photo.status === 'pending' && (
                         <div style={{ display:'flex', gap:8 }}>
-                          <button onClick={async () => { await supabase.from('chore_photos').update({ status:'approved' }).eq('id', photo.id); setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'approved'} : p)); }} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>✅ Approve</button>
+                          <button onClick={async () => { await supabase.from('chore_photos').update({ status:'approved' }).eq('id', photo.id);
+                          const chore = chores.find(ch => ch.id === photo.chore_id);
+                          if(chore) {
+                            const kid = kids.find(k => k.id === photo.kid_id);
+                            if(kid) {
+                              const newEarned = Number(kid.earned_amount || 0) + Number(chore.pay_per_completion);
+                              await supabase.from('kids').update({ earned_amount: newEarned }).eq('id', kid.id);
+                              setKids(kids.map(k => k.id === kid.id ? {...k, earned_amount: newEarned} : k));
+                            }
+                          }
+                          setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'approved'} : p)); }} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>✅ Approve</button>
                           <button onClick={async () => { await supabase.from('chore_photos').update({ status:'rejected' }).eq('id', photo.id); setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'rejected'} : p)); }} style={{ flex:1, background:'#FFF0F0', color:'#C00', border:'1px solid #FFD0D0', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>❌ Reject</button>
                         </div>
                       )}
@@ -472,7 +482,7 @@ export default function Dashboard() {
               {kids.map(kid => {
                 const kc = chores.filter(c => c.assign_to === 'both' || c.assign_to === kid.id);
                 const weRaw = kc.reduce((a,c) => a + Number(c.pay_per_completion), 0);
-                const we = paidKids.includes(kid.id) ? 0 : weRaw;
+                const we = paidKids.includes(kid.id) ? 0 : Number(kid.earned_amount || 0);
                 return (
                   <div key={kid.id} style={{ background:surface, borderRadius:20, padding:20, border:`1px solid ${border}`, display:'flex', alignItems:'center', gap:16 }}>
                     <div style={{ width:48, height:48, borderRadius:14, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:20, color:'#0F6E56' }}>{kid.name[0]}</div>
