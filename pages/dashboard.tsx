@@ -482,11 +482,7 @@ export default function Dashboard() {
                     </div>
                     <div style={{ textAlign:'right' }}>
                       <div style={{ fontSize:26, fontWeight:900, color:'#1D9E75' }}>${we.toFixed(2)}</div>
-                      <div style={{ fontSize:11, color:text3 }}>earned this week</div><div style={{marginTop:10,display:"flex",gap:8}}><button onClick={()=>supabase.from("payments").insert({family_id:family?.id,kid_id:kid.id,kid_name:kid.name,amount:we,paid_at:new Date().toISOString()}).then(({error})=>{ if(error) alert("Error: "+error.message); else { 
-    setPaidKids(prev=>{ const next=[...prev,kid.id]; try{localStorage.setItem('seru_paid_kids',JSON.stringify(next));}catch{} return next; }); 
-    const choice = window.confirm("✅ Paid " + kid.name + " $" + we.toFixed(2) + " recorded!\n\nDo you want to transfer the money now?\n\nOK = Open Step\nCancel = I will pay later");
-    if(choice) window.open("https://step.com", "_blank");
-  } })} style={{flex:1,background:"#1D9E75",color:"#fff",border:"none",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>💸 Pay</button><select onChange={(e)=>{ const m=e.target.value; if(!m) return; const urls={"venmo":"https://venmo.com","zelle":"https://zellepay.com","cashapp":"https://cash.app","step":"https://step.com","current":"https://current.com"}; if(urls[m]) window.open(urls[m],"_blank"); else alert("Pay "+kid.name+" $"+we.toFixed(2)+" - "+m+"! ✅"); e.target.value=""; }} style={{flex:1,background:"#1D9E75",color:"#fff",border:"none",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>
+                      <div style={{ fontSize:11, color:text3 }}>earned this week</div><div style={{marginTop:10,display:"flex",gap:8}}><select onChange={(e)=>{ const m=e.target.value; if(!m) return; const urls={"venmo":"https://venmo.com","zelle":"https://zellepay.com","cashapp":"https://cash.app","step":"https://step.com","current":"https://current.com"}; if(urls[m]) window.open(urls[m],"_blank"); else alert("Pay "+kid.name+" $"+we.toFixed(2)+" - "+m+"! ✅"); e.target.value=""; }} style={{flex:1,background:"#1D9E75",color:"#fff",border:"none",borderRadius:12,padding:"10px",fontSize:13,fontWeight:700,cursor:"pointer"}}>
   <option value="">💸 Pay ${we.toFixed(2)}</option>
   <option value="venmo">💜 Venmo</option>
   <option value="zelle">💜 Zelle</option>
