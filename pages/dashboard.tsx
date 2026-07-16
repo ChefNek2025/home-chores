@@ -482,7 +482,7 @@ export default function Dashboard() {
               {kids.map(kid => {
                 const kc = chores.filter(c => c.assign_to === 'both' || c.assign_to === kid.id);
                 const weRaw = kc.reduce((a,c) => a + Number(c.pay_per_completion), 0);
-                const we = paidKids.includes(kid.id) ? 0 : Number(kid.earned_amount || 0);
+                const we = (paidKids.includes(kid.id) || kid.paid_this_week) ? 0 : Number(kid.earned_amount || 0);
                 return (
                   <div key={kid.id} style={{ background:surface, borderRadius:20, padding:20, border:`1px solid ${border}`, display:'flex', alignItems:'center', gap:16 }}>
                     <div style={{ width:48, height:48, borderRadius:14, background:'#E1F5EE', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:20, color:'#0F6E56' }}>{kid.name[0]}</div>
