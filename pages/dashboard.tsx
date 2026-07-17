@@ -453,11 +453,11 @@ export default function Dashboard() {
                       {photo.status === 'pending' && (
                         <div style={{ display:'flex', gap:8 }}>
                           <button onClick={async () => { await supabase.from('chore_photos').update({ status:'approved' }).eq('id', photo.id);
-                          const chore = chores.find(ch => ch.id === photo.chore_id);
-                          if(chore) {
+                          const approvedChore = chores.find(ch => ch.id === photo.chore_id);
+                          if(approvedChore) {
                             const kid = kids.find(k => k.id === photo.kid_id);
                             if(kid) {
-                              const newEarned = Number(kid.earned_amount || 0) + Number(chore.pay_per_completion);
+                              const newEarned = Number(kid.earned_amount || 0) + Number(approvedChore.pay_per_completion);
                               await supabase.from('kids').update({ earned_amount: newEarned }).eq('id', kid.id);
                               setKids(kids.map(k => k.id === kid.id ? {...k, earned_amount: newEarned} : k));
                               console.log('Updated earned for', kid.name, 'to', newEarned);
