@@ -460,9 +460,12 @@ export default function Dashboard() {
                               const newEarned = Number(kid.earned_amount || 0) + Number(chore.pay_per_completion);
                               await supabase.from('kids').update({ earned_amount: newEarned }).eq('id', kid.id);
                               setKids(kids.map(k => k.id === kid.id ? {...k, earned_amount: newEarned} : k));
+                              console.log('Updated earned for', kid.name, 'to', newEarned);
                             }
                           }
-                          setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'approved'} : p)); }} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>✅ Approve</button>
+                          setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'approved'} : p));
+                          const { data: freshKids } = await supabase.from('kids').select('*').eq('family_id', family?.id);
+                          if(freshKids) setKids(freshKids); }} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>✅ Approve</button>
                           <button onClick={async () => { await supabase.from('chore_photos').update({ status:'rejected' }).eq('id', photo.id); setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'rejected'} : p)); }} style={{ flex:1, background:'#FFF0F0', color:'#C00', border:'1px solid #FFD0D0', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>❌ Reject</button>
                         </div>
                       )}
