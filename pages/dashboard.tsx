@@ -465,6 +465,7 @@ export default function Dashboard() {
                           }
                           setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'approved'} : p));
                           const { data: freshKids } = await supabase.from('kids').select('*').eq('family_id', family?.id);
+                          console.log('Fresh kids loaded:', freshKids?.map(k => k.name + ':' + k.earned_amount));
                           if(freshKids) setKids(freshKids); }} style={{ flex:1, background:'#1D9E75', color:'#fff', border:'none', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>✅ Approve</button>
                           <button onClick={async () => { await supabase.from('chore_photos').update({ status:'rejected' }).eq('id', photo.id); setPhotos(photos.map(p => p.id===photo.id ? {...p, status:'rejected'} : p)); }} style={{ flex:1, background:'#FFF0F0', color:'#C00', border:'1px solid #FFD0D0', borderRadius:10, padding:'10px', fontWeight:700, cursor:'pointer' }}>❌ Reject</button>
                         </div>
