@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useDark } from './_app';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 
