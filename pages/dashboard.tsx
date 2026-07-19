@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
   useEffect(() => { setIsClient(true); }, []);
-  const [paidKids, setPaidKids] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem('seru_paid_kids') || '[]'); } catch { return []; } });
+  const [paidKids, setPaidKids] = useState<string[]>([]);
   const [tab, setTab] = useState('overview');
   const [newKidName, setNewKidName] = useState('');
   const [newKidAge, setNewKidAge] = useState('');
