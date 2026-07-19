@@ -21,10 +21,12 @@ export function useDark() { return useContext(DarkModeContext); }
 
 export default function App({ Component, pageProps }: AppProps) {
   const [dark, setDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('seru_dark_mode');
     if (saved === 'true') setDark(true);
+    setMounted(true);
   }, []);
 
   function toggleDark() {
@@ -33,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
     localStorage.setItem('seru_dark_mode', String(newDark));
   }
 
-  const theme = dark ? {
+  const theme = (mounted && dark) ? {
     dark: true,
     toggleDark,
     bg: '#0D1117',
