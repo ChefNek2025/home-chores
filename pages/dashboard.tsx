@@ -593,7 +593,7 @@ function PayHistory({ supabase, familyId }: any) {
         <div style={{ fontSize:13, color:'#9FE1CB', fontWeight:700, marginBottom:4 }}>TOTAL PAID TO KIDS</div>
         <div style={{ fontSize:36, fontWeight:900, color:'#fff' }}>${total.toFixed(2)}</div>
         <button onClick={()=>{
-    setKids(prev=>prev.map(k=>k.id===kid.id?{...k,earned_amount:0,paid_this_week:true}:k));
+    console.log('PAY CLICKED for', kid.name, 'amount:', we); setKids(prev=>prev.map(k=>k.id===kid.id?{...k,earned_amount:0,paid_this_week:true}:k));
     setPaidKids(prev=>[...prev,kid.id]);
     fetch('/api/pay-kid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kidId:kid.id,familyId:family?.id,kidName:kid.name,amount:we})}).then(r=>r.json()).then(d=>console.log('paid:',d));
   }} style={{flex:1,background:'#1D9E75',color:'#fff',border:'none',borderRadius:12,padding:'10px',fontSize:13,fontWeight:700,cursor:'pointer'}}>💸 Pay ${we.toFixed(2)}</button>
