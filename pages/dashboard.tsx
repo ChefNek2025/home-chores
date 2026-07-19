@@ -651,3 +651,8 @@ function AIReport({ familyId }: { familyId: string }) {
     </div>
   );
 }
+
+
+export async function getServerSideProps() {
+  return { props: {} };
+}
