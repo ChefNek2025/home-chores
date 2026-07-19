@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase';
 
 export default function Dashboard() {
   const router = useRouter();
-  const { dark, bg, bg2, surface, border, text, text2, text3, cardBg, headerBg, inputBg, inputBorder } = useDark();
+  const { dark, bg, bg2, surface, border, text, text2, text3 } = useDark();
   const [family, setFamily] = useState<any>(null);
   const [kids, setKids] = useState<any[]>([]);
   const [chores, setChores] = useState<any[]>([]);
