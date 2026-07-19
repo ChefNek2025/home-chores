@@ -11,6 +11,8 @@ export default function Dashboard() {
   const [chores, setChores] = useState<any[]>([]);
   const [photos, setPhotos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(true); }, []);
   const [paidKids, setPaidKids] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem('seru_paid_kids') || '[]'); } catch { return []; } });
   const [tab, setTab] = useState('overview');
   const [newKidName, setNewKidName] = useState('');
@@ -169,6 +171,8 @@ export default function Dashboard() {
     await supabase.auth.signOut();
     router.push('/login');
   }
+
+  if (!isClient) return null;
 
   if (loading) return (
     <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Inter,system-ui,sans-serif' }}>
