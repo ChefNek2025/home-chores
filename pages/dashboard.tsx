@@ -184,7 +184,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div style={{ fontFamily:'Inter,system-ui,sans-serif', minHeight:'100vh', background:bg2 }}>
+    <div suppressHydrationWarning style={{ fontFamily:'Inter,system-ui,sans-serif', minHeight:'100vh', background:bg2 }}>
       <div style={{ background:surface, borderBottom:`1px solid ${border}`, padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', position:'sticky', top:0, zIndex:10 }}>
         <div style={{ display:'flex', alignItems:'center', gap:10 }}>
           <span style={{ fontSize:24 }}>🏠</span>
