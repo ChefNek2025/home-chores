@@ -83,6 +83,20 @@ export default function App({ Component, pageProps }: AppProps) {
           }}
         >{dark ? '☀️' : '🌙'}</button>
       </div>
+      <div style={{ position:'fixed', bottom:20, right:20, zIndex:9999 }}>
+        <button
+          onClick={toggleDark}
+          title={dark ? 'Light Mode' : 'Dark Mode'}
+          style={{
+            width:48, height:48, borderRadius:'50%',
+            border:'2px solid #1D9E75',
+            background: dark ? '#1A1A1A' : '#fff',
+            cursor:'pointer', fontSize:22,
+            display:'flex', alignItems:'center', justifyContent:'center',
+            boxShadow:'0 4px 20px rgba(0,0,0,0.2)',
+          }}
+        >{dark ? '☀️' : '🌙'}</button>
+      </div>
       <Component {...pageProps} />
     </DarkModeContext.Provider>
   );
