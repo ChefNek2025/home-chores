@@ -5,15 +5,13 @@ import { supabase } from '../lib/supabase';
 
 export default function Dashboard() {
   const router = useRouter();
-  const { dark, bg, bg2, surface, border, text, text2, text3 } = useDark();
+  const { dark, bg, bg2, surface, border, text, text2, text3, cardBg, headerBg, inputBg, inputBorder } = useDark();
   const [family, setFamily] = useState<any>(null);
   const [kids, setKids] = useState<any[]>([]);
   const [chores, setChores] = useState<any[]>([]);
   const [photos, setPhotos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => { setIsClient(true); }, []);
-  const [paidKids, setPaidKids] = useState<string[]>([]);
+  const [paidKids, setPaidKids] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem('seru_paid_kids') || '[]'); } catch { return []; } });
   const [tab, setTab] = useState('overview');
   const [newKidName, setNewKidName] = useState('');
   const [newKidAge, setNewKidAge] = useState('');
@@ -172,8 +170,6 @@ export default function Dashboard() {
     router.push('/login');
   }
 
-  if (!isClient) return null;
-
   if (loading) return (
     <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Inter,system-ui,sans-serif' }}>
       <div style={{ textAlign:'center' }}>
@@ -184,7 +180,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div suppressHydrationWarning style={{ fontFamily:'Inter,system-ui,sans-serif', minHeight:'100vh', background:bg2 }}>
+    <div style={{ fontFamily:'Inter,system-ui,sans-serif', minHeight:'100vh', background:bg2 }}>
       <div style={{ background:surface, borderBottom:`1px solid ${border}`, padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', position:'sticky', top:0, zIndex:10 }}>
         <div style={{ display:'flex', alignItems:'center', gap:10 }}>
           <span style={{ fontSize:24 }}>🏠</span>
@@ -596,11 +592,7 @@ function PayHistory({ supabase, familyId }: any) {
       <div style={{ background:'#1D9E75', borderRadius:20, padding:20, marginBottom:16, textAlign:'center' }}>
         <div style={{ fontSize:13, color:'#9FE1CB', fontWeight:700, marginBottom:4 }}>TOTAL PAID TO KIDS</div>
         <div style={{ fontSize:36, fontWeight:900, color:'#fff' }}>${total.toFixed(2)}</div>
-        <button onClick={()=>{
-    console.log('PAY CLICKED for', kid.name, 'amount:', we); setKids(prev=>prev.map(k=>k.id===kid.id?{...k,earned_amount:0,paid_this_week:true}:k));
-    setPaidKids(prev=>[...prev,kid.id]);
-    fetch('/api/pay-kid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kidId:kid.id,familyId:family?.id,kidName:kid.name,amount:we})}).then(r=>r.json()).then(d=>console.log('paid:',d));
-  }} style={{flex:1,background:'#1D9E75',color:'#fff',border:'none',borderRadius:12,padding:'10px',fontSize:13,fontWeight:700,cursor:'pointer'}}>💸 Pay ${we.toFixed(2)}</button>
+        <button onClick={async()=>{ if(window.confirm('Clear all payment history?')){ await supabase.from('payments').delete().eq('family_id',familyId); setPayments([]); alert('Cleared! ✅'); }}} style={{ marginTop:12, width:'100%', background:'rgba(255,255,255,0.15)', color:'#fff', '#EBEBEB':'1px solid rgba(255,255,255,0.3)', borderRadius:10, padding:'8px', fontSize:12, fontWeight:700, cursor:'pointer' }}>🗑️ Clear Payment History</button>
       </div>
       <div style={{ display:'grid', gap:10 }}>
         {payments.map((p: any, i: number) => (
@@ -654,9 +646,4 @@ function AIReport({ familyId }: { familyId: string }) {
       </button>
     </div>
   );
-}
-
-
-export async function getServerSideProps() {
-  return { props: {} };
 }

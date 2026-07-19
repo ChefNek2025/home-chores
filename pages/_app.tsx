@@ -21,12 +21,10 @@ export function useDark() { return useContext(DarkModeContext); }
 
 export default function App({ Component, pageProps }: AppProps) {
   const [dark, setDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('seru_dark_mode');
     if (saved === 'true') setDark(true);
-    setMounted(true);
   }, []);
 
   function toggleDark() {
@@ -35,7 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
     localStorage.setItem('seru_dark_mode', String(newDark));
   }
 
-  const theme = (mounted && dark) ? {
+  const theme = dark ? {
     dark: true,
     toggleDark,
     bg: '#0D1117',
@@ -71,7 +69,20 @@ export default function App({ Component, pageProps }: AppProps) {
         * { transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
         body { background: ${theme.bg} !important; color: ${theme.text} !important; }
       `}</style>
-
+      <div style={{ position:'fixed', bottom:20, right:20, zIndex:9999 }}>
+        <button
+          onClick={toggleDark}
+          title={dark ? 'Light Mode' : 'Dark Mode'}
+          style={{
+            width:48, height:48, borderRadius:'50%',
+            border:'2px solid #1D9E75',
+            background: dark ? '#1A1A1A' : '#fff',
+            cursor:'pointer', fontSize:22,
+            display:'flex', alignItems:'center', justifyContent:'center',
+            boxShadow:'0 4px 20px rgba(0,0,0,0.2)',
+          }}
+        >{dark ? '☀️' : '🌙'}</button>
+      </div>
       <Component {...pageProps} />
     </DarkModeContext.Provider>
   );
